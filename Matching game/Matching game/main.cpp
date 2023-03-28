@@ -1,5 +1,7 @@
 #include "console.h"
 #include "menu.h"
+#include "board.h"
+#include "gameplay.h"
 
 int main() {
 	Console::setupConsole();
@@ -9,8 +11,12 @@ int main() {
 	int status = 0;
 	int mode = 0;
 	int exit = 0;
-	status = Menu::mainMenu();
 
+	Board board(26, 10, 6, 10);
+	board.clearBoard(board.pBoard);
+	cin.get();
+
+	status = Menu::mainMenu();
 	while (status != 3 || exit != 1) {
 		if (status == 0) {
 			mode = Menu::modeSelectMenu();

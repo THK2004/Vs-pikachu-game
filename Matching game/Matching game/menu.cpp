@@ -273,7 +273,7 @@ void Menu::printAnimation()
         }
         Console::gotoXY(0, 0);
         turn = !turn;
-        Sleep(400);
+        Sleep(100);
     }
     Console::setColor(WHITE, BLACK);
     system("cls");

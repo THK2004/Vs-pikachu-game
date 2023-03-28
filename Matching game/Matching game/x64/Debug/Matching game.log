@@ -1,3 +1,4 @@
-﻿  menu.cpp
-D:\SourceCode\KTLT\VS 1st project\Matching game\Matching game\menu.cpp(248,15): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+﻿  main.cpp
+  gameplay.cpp
+  Generating Code...
   Matching game.vcxproj -> D:\SourceCode\KTLT\VS 1st project\Matching game\x64\Debug\Matching game.exe
