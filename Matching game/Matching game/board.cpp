@@ -10,8 +10,10 @@ Board::Board(int _top, int _left, int _height, int _width) {
 	for (int i = 0; i < height; i++) {
 		pBoard[i] = new Cell[width];
 		for (int j = 0; j < width; j++) {
-			pBoard[i][j].x = j + float(top) / 10;
-			pBoard[i][j].y = i + float(left) / 4;
+			pBoard[i][j].x_console = j + float(top) / 10;
+			pBoard[i][j].y_console = i + float(left) / 4;
+			pBoard[i][j].x = i;
+			pBoard[i][j].y = j;
 		}
 	}
 
@@ -59,11 +61,11 @@ void Board::drawBoard(int height, int width, Cell** pBoard) {
 }
 
 void Cell::drawCell() {
-	if (pokemon == '0')
-		return;
+	//if (pokemon == '0')
+	//	return;
 
 	for (int i = 0; i < 5; i++) {
-		Console::gotoXY(int(x * 10), int(y * 4) + i);
+		Console::gotoXY(int(x_console * 10), int(y_console * 4) + i);
 		cout << box[i];
 	}
 
@@ -71,17 +73,17 @@ void Cell::drawCell() {
 		Console::setColor(LIGHT_RED, BLACK);
 
 		for (int i = 1; i < 4; i++) {
-			Console::gotoXY(int(x * 10) + 1, int(y * 4) + i);
+			Console::gotoXY(int(x_console * 10) + 1, int(y_console * 4) + i);
 			cout << "         ";
 		}
 
-		Console::gotoXY(int(x * 10) + 5, int(y * 4) + 2);
+		Console::gotoXY(int(x_console * 10) + 5, int(y_console * 4) + 2);
 		cout << pokemon;
 
 		Console::setColor(WHITE, BLACK);
 	}
 	else{
-		Console::gotoXY(int(x * 10) + 5, int(y * 4) + 2);
+		Console::gotoXY(int(x_console * 10) + 5, int(y_console * 4) + 2);
 		cout << pokemon;
 		Console::setColor(WHITE, BLACK);
 	}
@@ -89,7 +91,7 @@ void Cell::drawCell() {
 
 void Cell::deleteCell() {
 	for (int i = 0; i < 5; i++) {
-		Console::gotoXY(int(x * 10), int(y * 4) + i);
+		Console::gotoXY(int(x_console * 10), int(y_console * 4) + i);
 		cout << "           ";
 	}
 }
