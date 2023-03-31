@@ -2,6 +2,7 @@
 #include "menu.h"
 #include "board.h"
 #include "gameplay.h"
+#include "normal.h"
 
 int main() {
 	Console::setupConsole();
@@ -12,43 +13,38 @@ int main() {
 	int mode = 0;
 	int exit = 0;
 
-	Board board(26, 10, 2, 3);
+	/*
+	Board board(26, 10, 3, 3);
 
 	GamePlay gameplay;
 
-	for (int i = 0; i < 2; i++)
+	for (int i = 0; i < 3; i++)
 		for (int j = 0; j < 3; j++)
 			board.pBoard[i][j].pokemon = '0';
 
 	board.pBoard[0][0].pokemon = 'A';
-	board.pBoard[1][2].pokemon = 'A';
-	board.pBoard[1][0].pokemon = 'B';
-	board.pBoard[0][2].pokemon = 'B';
-	board.drawBoard(2, 3, board.pBoard);
-
-	Console::gotoXY(0, 0);
-	for (int i = 0; i < 2; i++){
-		for (int j = 0; j < 3; j++) {
-			cout << "( " << board.pBoard[i][j].x ;
-			cout << board.pBoard[i][j].y << " )";
-		}
-		cout << endl;
-	}
+	board.pBoard[2][1].pokemon = 'A';
+	board.pBoard[1][1].pokemon = 'B';
+	board.pBoard[2][0].pokemon = 'B';
+	board.pBoard[2][2].pokemon = 'B';
+	board.drawBoard(3, 3, board.pBoard);
 
 	pair <int, int> check(-2, -2);
-	check = gameplay.check2Cells(board.pBoard, 2, 3, board.pBoard[0][0], board.pBoard[1][2]);
+	check = gameplay.check2Cells(board.pBoard, 3, 3, board.pBoard[0][0], board.pBoard[2][1]);
 	Console::gotoXY(30, 0);
 	cout << check.first << " " << check.second;
 
 	board.clearBoard(board.pBoard);
 	cin.get();
-
+	*/
 
 
 	status = Menu::mainMenu();
 	while (status != 3 || exit != 1) {
 		if (status == 0) {
 			mode = Menu::modeSelectMenu();
+			if (mode == 0)
+				Normal::createNormalBoard();
 			if (mode == 3)
 				status = Menu::mainMenu();
 		}

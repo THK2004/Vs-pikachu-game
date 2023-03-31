@@ -8,9 +8,9 @@
 using namespace std;
 
 struct GamePlay {
-	int score;
-	int remainingCell;
-	int validPair;
+	int score = 0;
+	int remainingCell = 0;
+	int validPair = 0;
 
 														//Cho x là trục tung chiều dương đi xuống, y là trục hoành chiều dương qua phải 
 	bool checkMatching(Cell, Cell);

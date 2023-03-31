@@ -27,6 +27,9 @@
     <ClInclude Include="gameplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="normal.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="console.cpp">
@@ -42,6 +45,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="board.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="normal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

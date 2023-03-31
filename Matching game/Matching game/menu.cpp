@@ -16,7 +16,7 @@ int Menu::mainMenu() {
     int choice[4] = { 0,0,0,0 };
     int key = 0;
     int curChoice = 0;
-
+    int EXIT = 0;
 
     while (true) {
         choice[curChoice] = 1;
@@ -24,56 +24,55 @@ int Menu::mainMenu() {
         if (choice[0]) {
             Console::gotoXY(62, 15);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " NEW GAME ";
+            std::cout << " NEW GAME ";
         }
         else {
             Console::gotoXY(62, 15);
             Console::setColor(WHITE, BLACK);
-            cout << " NEW GAME ";
+            std::cout << " NEW GAME ";
         }
         if (choice[1]) {
             Console::gotoXY(62, 18);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " CONTINUE ";
+            std::cout << " CONTINUE ";
         }
         else {
             Console::gotoXY(62, 18);
             Console::setColor(WHITE, BLACK);
-            cout << " CONTINUE ";
+            std::cout << " CONTINUE ";
         }
 
         if (choice[2]) {
             Console::gotoXY(61, 21);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " LEADERBOARD ";
+            std::cout << " LEADERBOARD ";
         }
         else {
             Console::gotoXY(61, 21);
             Console::setColor(WHITE, BLACK);
-            cout << " LEADERBOARD ";
+            std::cout << " LEADERBOARD ";
         }
 
         if (choice[3]) {
             Console::gotoXY(64, 24);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " EXIT ";
+            std::cout << " EXIT ";
         }
         else {
             Console::gotoXY(64, 24);
             Console::setColor(WHITE, BLACK);
-            cout << " EXIT ";
+            std::cout << " EXIT ";
         }
 
         Console::setColor(WHITE, BLACK);
 
-        while (true) {
+       while (true) {
             int flag = 0;
-
             key = _getch();
             switch (key) {
             case KEY_ENTER:
                 Console::playSound(MENU_SOUND);
-                system("cls");
+                std::system("cls");
                 return curChoice;
             case KEY_UP:
                 Console::playSound(MENU_SOUND);
@@ -87,6 +86,24 @@ int Menu::mainMenu() {
                 if (curChoice < 3) curChoice++;
                 else curChoice = 0;
                 break;
+            case KEY_ESC:
+                Console::playSound(MENU_SOUND);
+                std::system("cls");
+                EXIT = exitScreen();
+                if (EXIT == 0) {
+                    printLogo();
+
+                    printDoubleRectangle(59, 13, 15, 13);
+                    printRectangle(60, 14, 13, 2);
+                    printRectangle(60, 17, 13, 2);
+                    printRectangle(60, 20, 13, 2);
+                    printRectangle(60, 23, 13, 2);
+
+                    flag = 0;
+                    break;
+                }
+                else 
+                    exit(0);
             default:
                 flag = 1;
                 break;
@@ -113,6 +130,7 @@ int Menu::modeSelectMenu() {
     int choice[4] = { 0,0,0,0 };
     int key = 0;
     int curChoice = 0;
+    int EXIT = 0;
 
 
     while (true) {
@@ -121,44 +139,44 @@ int Menu::modeSelectMenu() {
         if (choice[0]) {
             Console::gotoXY(64, 15);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " NORMAL ";
+            std::cout << " NORMAL ";
         }
         else {
             Console::gotoXY(64, 15);
             Console::setColor(WHITE, BLACK);
-            cout << " NORMAL ";
+            std::cout << " NORMAL ";
         }
         if (choice[1]) {
             Console::gotoXY(65, 18);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " HARD ";
+            std::cout << " HARD ";
         }
         else {
             Console::gotoXY(65, 18);
             Console::setColor(WHITE, BLACK);
-            cout << " HARD ";
+            std::cout << " HARD ";
         }
 
         if (choice[2]) {
             Console::gotoXY(65, 21);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " HELP ";
+            std::cout << " HELP ";
         }
         else {
             Console::gotoXY(65, 21);
             Console::setColor(WHITE, BLACK);
-            cout << " HELP ";
+            std::cout << " HELP ";
         }
 
         if (choice[3]) {
             Console::gotoXY(65, 24);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " BACK ";
+            std::cout << " BACK ";
         }
         else {
             Console::gotoXY(65, 24);
             Console::setColor(WHITE, BLACK);
-            cout << " BACK ";
+            std::cout << " BACK ";
         }
 
         Console::setColor(WHITE, BLACK);
@@ -170,7 +188,7 @@ int Menu::modeSelectMenu() {
             switch (key) {
             case KEY_ENTER:
                 Console::playSound(MENU_SOUND);
-                system("cls");
+                std::system("cls");
                 return curChoice;
             case KEY_UP:
                 Console::playSound(MENU_SOUND);
@@ -184,6 +202,24 @@ int Menu::modeSelectMenu() {
                 if (curChoice < 3) curChoice++;
                 else curChoice = 0;
                 break;
+            case KEY_ESC:
+                Console::playSound(MENU_SOUND);
+                std::system("cls");
+                EXIT = exitScreen();
+                if (EXIT == 0) {
+                    printLogo();
+
+                    printDoubleRectangle(59, 13, 15, 13);
+                    printRectangle(60, 14, 13, 2);
+                    printRectangle(60, 17, 13, 2);
+                    printRectangle(60, 20, 13, 2);
+                    printRectangle(60, 23, 13, 2);
+
+                    flag = 0;
+                    break;
+                }
+                else
+                    exit(0);
             default:
                 flag = 1;
                 break;
@@ -281,58 +317,58 @@ void Menu::printAnimation()
 
 void Menu::printLogo() {
     Console::gotoXY(35, 2);
-    cout << " ______    __   __  ___      ___       ______  __    __   __    __";
+    std::cout << " ______    __   __  ___      ___       ______  __    __   __    __";
     Console::gotoXY(35, 3);
-    cout << "|   _  \\  |  | |  |/  /     /   \\     /      ||  |  |  | |  |  |  |";
+    std::cout << "|   _  \\  |  | |  |/  /     /   \\     /      ||  |  |  | |  |  |  |";
     Console::gotoXY(35, 4);
-    cout << "|  |_)  | |  | |  '  /     /  ^  \\   |  ,----'|  |__|  | |  |  |  |";
+    std::cout << "|  |_)  | |  | |  '  /     /  ^  \\   |  ,----'|  |__|  | |  |  |  |";
     Console::gotoXY(35, 5);
-    cout << "|   ___/  |  | |    <     /  /_\\  \\  |  |     |   __   | |  |  |  |";
+    std::cout << "|   ___/  |  | |    <     /  /_\\  \\  |  |     |   __   | |  |  |  |";
     Console::gotoXY(35, 6);
-    cout << "|  |      |  | |  .  \\   /  _____  \\ |  `----.|  |  |  | |  `--'  |";
+    std::cout << "|  |      |  | |  .  \\   /  _____  \\ |  `----.|  |  |  | |  `--'  |";
     Console::gotoXY(35, 7);
-    cout << "|__|      |__| |__|\\__\\ /__/     \\__\\ \\______||__|  |__|  \\______/";
+    std::cout << "|__|      |__| |__|\\__\\ /__/     \\__\\ \\______||__|  |__|  \\______/";
 }
 
 void Menu::printPikachu() {
     Console::gotoXY(105, 11);
-    cout << "-%#=.                            .::     ";
+    std::cout << "-%#=.                            .::     ";
     Console::gotoXY(105, 12);
-    cout << " =@%---:                    .--=%@@-     ";
+    std::cout << " =@%---:                    .--=%@@-     ";
     Console::gotoXY(105, 13);
-    cout << "  :%+----:                :==---@%:      ";
+    std::cout << "  :%+----:                :==---@%:      ";
     Console::gotoXY(105, 14);
-    cout << "    -------:    ....    .------+=    ... ";
+    std::cout << "    -------:    ....    .------+=    ... ";
     Console::gotoXY(105, 15);
-    cout << "      :-----::---------------:. .::----- ";
+    std::cout << "      :-----::---------------:. .::----- ";
     Console::gotoXY(105, 16);
-    cout << "         :=---------------::::---------: ";
+    std::cout << "         :=---------------::::---------: ";
     Console::gotoXY(105, 17);
-    cout << "         :----------------=-----------=  ";
+    std::cout << "         :----------------=-----------=  ";
     Console::gotoXY(105, 18);
-    cout << "         :-+#-+------==+#-=-----------:  ";
+    std::cout << "         :-+#-+------==+#-=-----------:  ";
     Console::gotoXY(105, 19);
-    cout << "         --+%%+---=---#%#---------::..   ";
+    std::cout << "         --+%%+---=---#%#---------::..   ";
     Console::gotoXY(105, 20);
-    cout << "        .##*------------=+*+---.         ";
+    std::cout << "        .##*------------=+*+---.         ";
     Console::gotoXY(105, 21);
-    cout << "         *##+-----------###*----.        ";
+    std::cout << "         *##+-----------###*----.        ";
     Console::gotoXY(105, 22);
-    cout << "          ++------------=*= ------       ";
+    std::cout << "          ++------------=*= ------       ";
     Console::gotoXY(105, 23);
-    cout << "          --------------------:..        ";
+    std::cout << "          --------------------:..        ";
     Console::gotoXY(105, 24);
-    cout << "         ------------------+#+           ";
+    std::cout << "         ------------------+#+           ";
     Console::gotoXY(105, 25);
-    cout << "        --------=---=-------:            ";
+    std::cout << "        --------=---=-------:            ";
     Console::gotoXY(105, 26);
-    cout << "       ----------=-=---------.           ";
+    std::cout << "       ----------=-=---------.           ";
     Console::gotoXY(105, 27);
-    cout << "    -=-=---------=-=-----------=         ";
+    std::cout << "    -=-=---------=-=-----------=         ";
     Console::gotoXY(105, 28);
-    cout << "     -==--=------=-=--------===.         ";
+    std::cout << "     -==--=------=-=--------===.         ";
     Console::gotoXY(105, 29);
-    cout << "      .======---===+---======:           ";
+    std::cout << "      .======---===+---======:           ";
 }
 
 int Menu::exitScreen() {
@@ -342,7 +378,7 @@ int Menu::exitScreen() {
     printRectangle(62, 17, 4, 2);
     printRectangle(70, 17, 5, 2);
     Console::gotoXY(60, 15);
-    cout << "Do you want to quit?";
+    std::cout << "Do you want to quit?";
 
     int choice[2] = {0,0};
     int key = 0;
@@ -354,22 +390,22 @@ int Menu::exitScreen() {
         if (choice[0]) {
             Console::gotoXY(63, 18);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " NO ";
+            std::cout << " NO ";
         }
         else {
             Console::gotoXY(63, 18);
             Console::setColor(WHITE, BLACK);
-            cout << " NO ";
+            std::cout << " NO ";
         }
         if (choice[1]) {
             Console::gotoXY(71, 18);
             Console::setColor(LIGHT_RED, BLACK);
-            cout << " YES ";
+            std::cout << " YES ";
         }
         else {
             Console::gotoXY(71, 18);
             Console::setColor(WHITE, BLACK);
-            cout << " YES ";
+            std::cout << " YES ";
         }
         Console::setColor(WHITE, BLACK);
 
@@ -380,7 +416,7 @@ int Menu::exitScreen() {
             switch (key) {
             case KEY_ENTER:
                 Console::playSound(MENU_SOUND);
-                system("cls");
+                std::system("cls");
                 return curChoice;
             case KEY_RIGHT:
                 Console::playSound(MENU_SOUND);
@@ -407,7 +443,7 @@ int Menu::exitScreen() {
 
 void Menu::leaderBoard() {
     Console::setColor(WHITE, BLACK);
-    cout << R"(
+    std::cout << R"(
 	                       _      ______          _____  ______ _____  ____   ____          _____  _____  
 	                      | |    |  ____|   /\   |  __ \|  ____|  __ \|  _ \ / __ \   /\   |  __ \|  __ \ 
 	                      | |    | |__     /  \  | |  | | |__  | |__) | |_) | |  | | /  \  | |__) | |  | |
@@ -418,18 +454,18 @@ void Menu::leaderBoard() {
     
     
     Console::gotoXY(5, 11);
-    cout << "_________________________________________________________________________________________________________________________________________";
+    std::cout << "_________________________________________________________________________________________________________________________________________";
     
     for (int j = 0; j < 126; j += 25) {
         for (int i = 0; i < 22; i++) {
             Console::gotoXY(j + 10, i + 9);
-            cout << "|";
+            std::cout << "|";
         }
     }
 
     printRectangle(54,32,40,2);
     Console::gotoXY(55, 33);
-    cout << "PRESS ANY BUTTON TO RETURN TO MAIN MENU!";
+    std::cout << "PRESS ANY BUTTON TO RETURN TO MAIN MENU!";
 
     int key = _getch();
     system("cls");

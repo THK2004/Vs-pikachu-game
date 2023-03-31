@@ -51,7 +51,7 @@ struct Console {
 	static void setupConsole();									//Cai dat man hinh console
 
 	static void disableCtrButton(bool, bool, bool);				//Vo hieu hoa nut phong to, thu nho, close
-	static void hideScrollbar();							//An hien thanh cuon
+	static void hideScrollbar();								//An hien thanh cuon
 	static void showCursor(bool); 								//An hien con tro
 	static void disableMouseInput(); 							//Vo hieu hoa chuot
 	static void disableSelection();								//Vo hieu hoa boi den chu
