@@ -24,6 +24,18 @@ struct Board {
 
 	Board(int, int, int, int);							//Init a board
 
+	void drawI(Cell, Cell);
+	void drawL(Cell, Cell, Cell);
+	void drawZ(Cell, Cell, Cell, Cell);
+	void drawU(Cell, Cell, Cell, Cell);
+	void drawLine2Cells(Cell**, Cell, Cell, pair<int, int>);
+
+	void eraseI(Cell, Cell);
+	void eraseL(Cell, Cell, Cell);
+	void eraseZ(Cell, Cell, Cell, Cell);
+	void eraseU(Cell, Cell, Cell, Cell);
+	void eraseLine2Cells(Cell**, Cell, Cell, pair<int, int>);
+
 	void drawBoard(int, int, Cell**);					//Vẽ board trên console
 	void deleteBoard(int, int, Cell**);					//Xóa board
 	void clearBoard(Cell**);							//clear memory

@@ -3,41 +3,27 @@
 #include "board.h"
 #include "gameplay.h"
 #include "normal.h"
+#include "login.h"
 
 int main() {
 	Console::setupConsole();
 	Menu::printAnimation();
 	Console::hideScrollbar();
+	LoginScreen::loginScreen();
 
 	int status = 0;
 	int mode = 0;
 	int exit = 0;
 
 	/*
-	Board board(26, 10, 3, 3);
+	Board board(TOP, LEFT, HEIGHT, WIDTH);
 
-	GamePlay gameplay;
+	//board.drawL(board.pBoard[0][2], board.pBoard[2][0], board.pBoard[2][2
+	//board.drawZ(board.pBoard[0][2], board.pBoard[2][0], board.pBoard[1][0], board.pBoard[1][2]);
+	//board.drawU(board.pBoard[1][2], board.pBoard[2][1], board.pBoard[0][1], board.pBoard[0][2]);
 
-	for (int i = 0; i < 3; i++)
-		for (int j = 0; j < 3; j++)
-			board.pBoard[i][j].pokemon = '0';
-
-	board.pBoard[0][0].pokemon = 'A';
-	board.pBoard[2][1].pokemon = 'A';
-	board.pBoard[1][1].pokemon = 'B';
-	board.pBoard[2][0].pokemon = 'B';
-	board.pBoard[2][2].pokemon = 'B';
-	board.drawBoard(3, 3, board.pBoard);
-
-	pair <int, int> check(-2, -2);
-	check = gameplay.check2Cells(board.pBoard, 3, 3, board.pBoard[0][0], board.pBoard[2][1]);
-	Console::gotoXY(30, 0);
-	cout << check.first << " " << check.second;
-
-	board.clearBoard(board.pBoard);
 	cin.get();
 	*/
-
 
 	status = Menu::mainMenu();
 	while (status != 3 || exit != 1) {

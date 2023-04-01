@@ -12,7 +12,6 @@ struct GamePlay {
 	int remainingCell = 0;
 	int validPair = 0;
 
-														//Cho x là trục tung chiều dương đi xuống, y là trục hoành chiều dương qua phải 
 	bool checkMatching(Cell, Cell);
 	pair<int, int> checkI(Cell**, Cell, Cell);			//pair return with (-2,y) or (x, -2) if a path (x or y) can be found, return (-2, -2) if not found.
 	pair<int, int> checkZ(Cell**, Cell, Cell);

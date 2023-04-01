@@ -1,13 +1,13 @@
 ﻿#include "normal.h"
 
 void Normal::createNormalBoard() {
-	Board board(26, 10, HEIGHT, WIDTH);
+	Board board(TOP, LEFT, HEIGHT, WIDTH);
 	GamePlay gameplay;
 	gameplay.score = 0;
 	pair<int, int> check(-2, -2);
 
 	pair<int, int> selectedCell[2] = { { -2, -2}, {-2, -2} };
-	int remainCell = 2;
+	int remainCell = 2;	// remaining Selectable Cells
 	pair<int, int> curPos(0, 0);
 	int isPlaying = 1; // 1 = đang chơi, 0 là hết game
 
