@@ -50,14 +50,18 @@ void Normal::createNormalBoard() {
 		Console::gotoXY(130, 0);
 		std::cout << "ValidPair(s): " << gameplay.validPair;
 		
-		board.pBoard[curPos.first][curPos.second].drawCell(LIGHT_RED);
-
+		//Draw selected Cell
 		for (int i = 0; i < HEIGHT * WIDTH; i++)
 			if (board.pBoard[i / WIDTH][i % WIDTH].isSelected)
 				board.pBoard[i / WIDTH][i % WIDTH].drawCell(YELLOW);
 
+		//Draw cell pointed by cursor
+		board.pBoard[curPos.first][curPos.second].drawCell(LIGHT_RED);
+
+		//Lặp các phím
 		while (true) {					//Xài trong trường hợp người dùng không nhập vào 1 trong các phím ở dưới
-			int true_while_flag = 0;	//Cờ thoát vòng lặp while true
+			bool true_while_flag = 0;	//Cờ thoát vòng lặp while true
+			bool isCurFound = 0;
 			key = _getch();
 
 			switch (key) {
@@ -73,39 +77,222 @@ void Normal::createNormalBoard() {
 					exit(0);
 
 			case KEY_RIGHT:
-				for (int i = curPos.second + 1; i < curPos.second + WIDTH; i++)
-					if (board.pBoard[curPos.first][i % WIDTH].pokemon != '0') {
-						curPos.second = i % WIDTH;
-						break;
+
+				//Check về bên phải cùng hàng
+				if (isCurFound == 0) {
+					for (int j = curPos.second + 1; j < WIDTH; j++)
+						if (board.pBoard[curPos.first][j].pokemon != '0') {
+							isCurFound = 1;
+							curPos.second = j;
+							break;
+						}
+				}
+
+				//Check theo đường xiên xuống 
+				if (isCurFound == 0) {
+					for (int i = curPos.first + 1; i < HEIGHT; i++) {
+						for (int j = curPos.second + 1; j < WIDTH; j++) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
 					}
+				}
+
+				//Check xiên lên
+				if (isCurFound == 0) {
+					for (int i = curPos.first - 1; i >= 0; i--) {
+						for (int j = curPos.second + 1; j < WIDTH; j++) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
+					}
+				}
+
+				//check ngược lại
+				if (isCurFound == 0) {
+					for (int j = 0; j < curPos.second; j++)
+						if (board.pBoard[curPos.first][j].pokemon != '0') {
+							isCurFound = 1;
+							curPos.second = j;
+							break;
+						}
+				}
 
 				break;
 
 			case KEY_LEFT:
-				for (int i = curPos.second - 1; i > curPos.second - WIDTH; i--)
-					if (board.pBoard[curPos.first][(i + WIDTH) % WIDTH].pokemon != '0') {
-						curPos.second = (i + WIDTH) % WIDTH;
-						break;
-					}
+				//Check về bên trái cùng hàng
+				if (isCurFound == 0) {
+					for (int j = curPos.second - 1; j >= 0; j--)
+						if (board.pBoard[curPos.first][j].pokemon != '0') {
+							isCurFound = 1;
+							curPos.second = j;
+							break;
+						}
+				}
 
+				//Check theo đường xiên xuống 
+				if (isCurFound == 0) {
+					for (int i = curPos.first + 1; i < HEIGHT; i++) {
+						for (int j = curPos.second - 1; j >= 0; j--) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
+					}
+				}
+
+				//Check xiên lên
+				if (isCurFound == 0) {
+					for (int i = curPos.first - 1; i >= 0; i--) {
+						for (int j = curPos.second - 1; j >= 0; j--) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
+					}
+				}
+
+				//check ngược lại
+				if (isCurFound == 0) {
+					for (int j = WIDTH - 1; j > curPos.second; j--)
+						if (board.pBoard[curPos.first][j].pokemon != '0') {
+							isCurFound = 1;
+							curPos.second = j;
+							break;
+						}
+				}
 				break;
 
 			case KEY_DOWN:
-				for (int i = curPos.first + 1; i < curPos.first + HEIGHT; i++)
-					if (board.pBoard[i % HEIGHT][curPos.second].pokemon != '0') {
-						curPos.first = i % HEIGHT;
-						break;
-					}
+				//Check thẳng xuống
+				if (isCurFound == 0) {
+					for (int i = curPos.first + 1; i < HEIGHT; i++)
+						if (board.pBoard[i][curPos.second].pokemon != '0') {
+							isCurFound = 1;
+							curPos.first = i;
+							break;
+						}
+				}
 
+				//Check theo đường xiên xuống qua phải
+				if (isCurFound == 0) {
+					for (int j = curPos.second + 1; j < WIDTH; j++) {
+						for (int i = curPos.first + 1; i < HEIGHT; i++) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
+					}
+				}
+
+				//Check xiên xuống qua trái
+				if (isCurFound == 0) {
+					for (int j = curPos.second -1; j >= 0; j--) {
+						for (int i = curPos.first + 1; i < HEIGHT; i++) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
+					}
+				}
+
+				//check ngược lại
+				if (isCurFound == 0) {
+					for (int i = 0; i < curPos.first; i++)
+						if (board.pBoard[i][curPos.second].pokemon != '0') {
+							isCurFound = 1;
+							curPos.first = i;
+							break;
+						}
+				}
 				break;
 
 			case KEY_UP:
-				for (int i = curPos.first - 1; i > curPos.first - HEIGHT; i--)
-					if (board.pBoard[(i + HEIGHT) % HEIGHT][curPos.second].pokemon != '0') {
-						curPos.first = (i + HEIGHT) % HEIGHT;
-						break;
-					}
 
+				//Check lên trên
+				if (isCurFound == 0) {
+					for (int i = curPos.first - 1; i >= 0; i--)
+						if (board.pBoard[i][curPos.second].pokemon != '0') {
+							isCurFound = 1;
+							curPos.first = i;
+							break;
+						}
+				}
+
+				//Check theo đường xiên lên qua phải
+				if (isCurFound == 0) {
+					for (int j = curPos.second + 1; j < WIDTH; j++) {
+						for (int i = curPos.first - 1; i >= 0; i--) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
+					}
+				}
+
+				//Check xiên lên qua trái
+				if (isCurFound == 0) {
+					for (int j = curPos.second - 1; j >= 0; j--) {
+						for (int i = curPos.first - 1; i > 0; i--) {
+							if (board.pBoard[i][j].pokemon != '0') {
+								isCurFound = 1;
+								curPos.first = i;
+								curPos.second = j;
+								break;
+							}
+						}
+						if (isCurFound)
+							break;
+					}
+				}
+
+				//check ngược lại
+				if (isCurFound == 0) {
+					for (int i = HEIGHT - 1; i > curPos.first; i--)
+						if (board.pBoard[i][curPos.second].pokemon != '0') {
+							isCurFound = 1;
+							curPos.first = i;
+							break;
+						}
+				}
 				break;
 
 			case KEY_ENTER:
@@ -207,4 +394,6 @@ void Normal::createNormalBoard() {
 	board.deleteBoard(HEIGHT, WIDTH, board.pBoard);
 	board.clearBoard(board.pBoard);
 	cin.get();
+	Console::gotoXY(30, 5);
+	std::cout << "           ";
 }

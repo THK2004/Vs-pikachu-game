@@ -4,11 +4,9 @@
 #include "board.h"
 #include "gameplay.h"
 
-#define HEIGHT 3
-#define WIDTH 4
+#define HEIGHT 4
+#define WIDTH 5
 
 struct Normal {
 	static void createNormalBoard();
-	void playNormal();
-	void deleteNormalBoard();
 };
