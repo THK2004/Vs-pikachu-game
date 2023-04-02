@@ -27,7 +27,7 @@
     <ClInclude Include="gameplay.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="normal.h">
+    <ClInclude Include="gamemode.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="login.h">
@@ -50,7 +50,7 @@
     <ClCompile Include="board.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="normal.cpp">
+    <ClCompile Include="gamemode.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="login.cpp">

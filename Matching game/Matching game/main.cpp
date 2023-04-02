@@ -2,7 +2,7 @@
 #include "menu.h"
 #include "board.h"
 #include "gameplay.h"
-#include "normal.h"
+#include "gamemode.h"
 #include "login.h"
 
 int main() {
@@ -15,22 +15,21 @@ int main() {
 	int mode = 0;
 	int exit = 0;
 
-	/*
-	Board board(TOP, LEFT, HEIGHT, WIDTH);
-
+	
+	//Board board(TOP, LEFT, HEIGHT, WIDTH);
 	//board.drawL(board.pBoard[0][2], board.pBoard[2][0], board.pBoard[2][2
 	//board.drawZ(board.pBoard[0][2], board.pBoard[2][0], board.pBoard[1][0], board.pBoard[1][2]);
 	//board.drawU(board.pBoard[1][2], board.pBoard[2][1], board.pBoard[0][1], board.pBoard[0][2]);
-
-	cin.get();
-	*/
+	//cin.get();
 
 	status = Menu::mainMenu();
 	while (status != 3 || exit != 1) {
 		if (status == 0) {
 			mode = Menu::modeSelectMenu();
 			if (mode == 0)
-				Normal::createNormalBoard();
+				GameMode::createNormalGame();
+			if (mode == 1)
+				GameMode::createHardGame_2DPointerArray();
 			if (mode == 3)
 				status = Menu::mainMenu();
 		}

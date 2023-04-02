@@ -132,7 +132,7 @@
     <ClInclude Include="gameplay.h" />
     <ClInclude Include="login.h" />
     <ClInclude Include="menu.h" />
-    <ClInclude Include="normal.h" />
+    <ClInclude Include="gamemode.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="console.cpp" />
@@ -141,7 +141,7 @@
     <ClCompile Include="menu.cpp" />
     <ClCompile Include="gameplay.cpp" />
     <ClCompile Include="board.cpp" />
-    <ClCompile Include="normal.cpp" />
+    <ClCompile Include="gamemode.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
