@@ -32,7 +32,6 @@ Board::Board(int _top, int _left, int _height, int _width) {
 	}
 
 	drawBoard(height, width, pBoard);
-	//Menu::printDoubleRectangle(top - 2, left - 1, width * 10 + 3, height * 4 + 2);
 }
 
 void Board::clearBoard(Cell** pBoard) {
@@ -70,7 +69,6 @@ void Cell::drawCell(int color) {
 		cout << box[i];
 	}
 
-	//if (isCursorHere) {
 	Console::setColor(color, BLACK);
 
 	for (int i = 1; i < 4; i++) {
@@ -82,14 +80,6 @@ void Cell::drawCell(int color) {
 	cout << pokemon;
 
 	Console::setColor(WHITE, BLACK);
-	//}
-	/*
-	else{
-		Console::gotoXY(int(x_console * 10) + 5, int(y_console * 4) + 2);
-		cout << pokemon;
-		Console::setColor(WHITE, BLACK);
-	}
-	*/
 }
 
 void Cell::deleteCell() {
@@ -108,54 +98,133 @@ void Board::deleteBoard(int hieght, int width, Cell** pBoard) {
 	}
 }
 
-
 void Board::drawI(Cell cell_1, Cell cell_2) {
-	Console::setColor(WHITE, BLACK);
-	int x1 = int(cell_1.x_console * 10) + 5;
-	int x2 = int(cell_2.x_console * 10) + 5;
-	int y1 = int(cell_1.y_console * 4) + 2;
-	int y2 = int(cell_2.y_console * 4) + 2;
-
+	Console::setColor(WHITE, RED);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
 	if (x1 == x2) {
-		Console::gotoXY(x1, y1 + 1);
-		putchar(30);
-		for (int i = y1 + 2; i <= y2 - 2; i++) {
-			Console::gotoXY(x1, i);
-			putchar(179);
+		if (y1 < y2) {
+			Console::gotoXY(x1, y1 + 1);
+			putchar(30);
+			for (int i = y1 + 2; i <= y2 - 2; i++) {
+				Console::gotoXY(x1, i);
+				putchar(179);
+			}
+			Console::gotoXY(x2, y2 - 1);
+			putchar(31);
+			return;
 		}
-
-		Console::gotoXY(x2, y2 - 1);
-		putchar(31);
-		return;
+		else {
+			Console::gotoXY(x1, y1 - 1);
+			putchar(31);
+			for (int i = y1 - 2; i >= y2 + 2; i--) {
+				Console::gotoXY(x1, i);
+				putchar(179);
+			}
+			Console::gotoXY(x2, y2 + 1);
+			putchar(30);
+			return;
+		}
 	}
-
-	// 2 Block cùng hàng ngang
+	//========================================================================//
 	if (y1 == y2) {
-		Console::gotoXY(x1 + 1, y1);
-		putchar(17);
-		for (int i = x1 + 2; i <= x2 - 2; i++) {
-			Console::gotoXY(i, y1);
-			putchar(45);
+		if (x1 < x2) {
+			Console::gotoXY(x1 + 1, y1);
+			putchar(17);
+			for (int i = x1 + 2; i <= x2 - 2; i++) {
+				Console::gotoXY(i, y1);
+				putchar(45);
+			}
+			Console::gotoXY(x2 - 1, y2);
+			putchar(16);
+			return;
 		}
-		Console::gotoXY(x2 - 1, y2);
-		putchar(16);
-		return;
+		else {
+			Console::gotoXY(x1 - 1, y1);
+			putchar(16);
+			for (int i = x1 - 2; i >= x2 + 2; i--) {
+				Console::gotoXY(i, y1);
+				putchar(45);
+			}
+			Console::gotoXY(x2 + 1, y2);
+			putchar(17);
+			return;
+		}
 	}
 }
 
-void Board::drawL(Cell cell_1, Cell cell_2, Cell cell_between) {
-	Console::setColor(WHITE, BLACK);
-	int x1 = int(cell_1.x_console * 10) + 5;
-	int x2 = int(cell_2.x_console * 10) + 5;
-	int y1 = int(cell_1.y_console * 4) + 2;
-	int y2 = int(cell_2.y_console * 4) + 2;
-	int xC = int(cell_between.x_console * 10) + 5;
-	int yC = int(cell_between.y_console * 4) + 2;
+void Board::eraseI(Cell cell_1, Cell cell_2) {
+	Console::setColor(WHITE, WHITE);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
+	if (x1 == x2) {
+		if (y1 < y2) {
+			Console::gotoXY(x1, y1 + 1);
+			putchar(32);
+			for (int i = y1 + 2; i <= y2 - 2; i++) {
+				Console::gotoXY(x1, i);
+				putchar(32);
+			}
+			Console::gotoXY(x2, y2 - 1);
+			putchar(32);
+			return;
+		}
+		else {
+			Console::gotoXY(x1, y1 - 1);
+			putchar(32);
+			for (int i = y1 - 2; i >= y2 + 2; i--) {
+				Console::gotoXY(x1, i);
+				putchar(32);
+			}
+			Console::gotoXY(x2, y2 + 1);
+			putchar(32);
+			return;
+		}
+	}
+	//========================================================================//
+	if (y1 == y2) {
+		if (x1 < x2) {
+			Console::gotoXY(x1 + 1, y1);
+			putchar(32);
+			for (int i = x1 + 2; i <= x2 - 2; i++) {
+				Console::gotoXY(i, y1);
+				putchar(32);
+			}
+			Console::gotoXY(x2 - 1, y2);
+			putchar(32);
+			return;
+		}
+		else {
+			Console::gotoXY(x1 - 1, y1);
+			putchar(32);
+			for (int i = x1 - 2; i >= x2 + 2; i--) {
+				Console::gotoXY(i, y1);
+				putchar(32);
+			}
+			Console::gotoXY(x2 + 1, y2);
+			putchar(32);
+			return;
+		}
+	}
+}
 
+void Board::drawL(Cell cell_1, Cell cell_C, Cell cell_2) {
+	Console::setColor(WHITE, RED);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
+	int xC = int((cell_C.x_console * 10)) + 5;
+	int yC = int((cell_C.y_console * 4)) + 2;
+	// Down-right
 	if (xC < x2 && yC > y1) {
 		Console::gotoXY(x1, y1 + 1);
 		putchar(30);
-		for (int i = y2 + 2; i <= yC - 1; i++) {
+		for (int i = y1 + 2; i <= yC - 1; i++) {
 			Console::gotoXY(x1, i);
 			putchar(179);
 		}
@@ -167,8 +236,24 @@ void Board::drawL(Cell cell_1, Cell cell_2, Cell cell_between) {
 		putchar(16);
 		return;
 	}
-
-	// Dạng 2: Down-right  
+	// Hoán vị cell_1 và cell_2
+	if (xC < x1 && yC > y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(16);
+		for (int i = x1 - 2; i >= xC; i--) {
+			Console::gotoXY(i, y1);
+			putchar(45);
+		}
+		for (int i = yC - 1; i >= y2 + 2; i--) {
+			Console::gotoXY(x2, i);
+			putchar(179);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(30);
+		return;
+	}
+	//========================================================================//
+	// Up-right
 	if (xC < x2 && yC < y1) {
 		Console::gotoXY(x1, y1 - 1);
 		putchar(31);
@@ -184,8 +269,24 @@ void Board::drawL(Cell cell_1, Cell cell_2, Cell cell_between) {
 		putchar(16);
 		return;
 	}
-
-	// Dạng 3: Down-left 
+	// Hoán vị cell-1 và cell_2
+	if (xC < x1 && yC < y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(16);
+		for (int i = x1 - 2; i >= xC + 1; i--) {
+			Console::gotoXY(i, y1);
+			putchar(45);
+		}
+		for (int i = yC + 1; i <= y2 - 2; i++) {
+			Console::gotoXY(x2, i);
+			putchar(179);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(31);
+		return;
+	}
+	//========================================================================//
+	// Up-left
 	if (yC < y2 && xC > x1) {
 		Console::gotoXY(x1 + 1, y1);
 		putchar(17);
@@ -201,8 +302,24 @@ void Board::drawL(Cell cell_1, Cell cell_2, Cell cell_between) {
 		putchar(31);
 		return;
 	}
-
-	// Dạng 4: Up-left 
+	//Hoán vị trí cell_1 và cell_2
+	if (yC < y1 && xC > x2) {
+		Console::gotoXY(x1, y1 - 1);
+		putchar(31);
+		for (int i = y1 - 2; i >= yC; i--) {
+			Console::gotoXY(x1, i);
+			putchar(179);
+		}
+		for (int i = xC; i >= x2 + 2; i--) {
+			Console::gotoXY(i, y2);
+			putchar(45);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(17);
+		return;
+	}
+	//========================================================================//
+	// Down-left
 	if (yC > y2 && xC > x1) {
 		Console::gotoXY(x1 + 1, y1);
 		putchar(17);
@@ -218,21 +335,177 @@ void Board::drawL(Cell cell_1, Cell cell_2, Cell cell_between) {
 		putchar(30);
 		return;
 	}
+	//Hoán vị trí cell_1 và cell_2
+	if (yC > y1 && xC > x2) {
+		Console::gotoXY(x1, y1 + 1);
+		putchar(30);
+		for (int i = y1 + 2; i <= yC; i++) {
+			Console::gotoXY(x1, i);
+			putchar(179);
+		}
+		for (int i = xC - 1; i >= x2 + 2; i--) {
+			Console::gotoXY(i, y2);
+			putchar(45);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(16);
+		return;
+	}
 }
 
-void Board::drawZ(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
-	Console::setColor(WHITE, BLACK);
-	int x1 = int(cell_1.x_console * 10) + 5;
-	int x2 = int(cell_2.x_console * 10) + 5;
-	int y1 = int(cell_1.y_console * 4) + 2;
-	int y2 = int(cell_2.y_console * 4) + 2;
-	int xC1 = int(cell_c1.x_console * 10) + 5;
-	int yC1 = int(cell_c1.y_console * 4) + 2;
-	int xC2 = int(cell_c2.x_console * 10) + 5;
-	int yC2 = int(cell_c2.y_console * 4) + 2;
+void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
+	Console::setColor(WHITE, WHITE);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
+	int xC = int((cell_C.x_console * 10)) + 5;
+	int yC = int((cell_C.y_console * 4)) + 2;
+	// Down-right
+	if (xC < x2 && yC > y1) {
+		Console::gotoXY(x1, y1 + 1);
+		putchar(32);
+		for (int i = y2 + 2; i <= yC - 1; i++) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC; i <= x2 - 2; i++) {
+			Console::gotoXY(i, y2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+	if (xC < x1 && yC > y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(32);
+		for (int i = x1 - 2; i >= xC; i--) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC - 1; i >= y2 + 2; i--) {
+			Console::gotoXY(x2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(32);
+		return;
+	}
+	//========================================================================//
+	// Up-right
+	if (xC < x2 && yC < y1) {
+		Console::gotoXY(x1, y1 - 1);
+		putchar(32);
+		for (int i = y1 - 2; i >= yC + 1; i--) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC; i <= x2 - 2; i++) {
+			Console::gotoXY(i, y2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+
+	if (xC < x1 && yC < y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(32);
+		for (int i = x1 - 2; i >= xC + 1; i--) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC; i <= y2 - 2; i++) {
+			Console::gotoXY(x2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+	//========================================================================//
+	// Up-left
+	if (yC < y2 && xC > x1) {
+		Console::gotoXY(x1 + 1, y1);
+		putchar(32);
+		for (int i = x1 + 2; i <= xC; i++) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC + 1; i <= y2 - 2; i++) {
+			Console::gotoXY(x2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+
+	if (yC < y1 && xC > x2) {
+		Console::gotoXY(x1, y1 - 1);
+		putchar(32);
+		for (int i = y1 - 2; i >= yC; i--) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC - 1; i >= x2 + 2; i--) {
+			Console::gotoXY(i, y2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(32);
+		return;
+	}
+	//========================================================================//
+	// Down-left
+	if (yC > y2 && xC > x1) {
+		Console::gotoXY(x1 + 1, y1);
+		putchar(32);
+		for (int i = x1 + 2; i <= xC; i++) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC - 1; i >= y2 + 2; i--) {
+			Console::gotoXY(x2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(32);
+		return;
+	}
+
+	if (yC > y1 && xC > x2) {
+		Console::gotoXY(x1, y1 + 1);
+		putchar(32);
+		for (int i = y1 + 2; i <= yC; i++) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC - 1; i >= x2 + 2; i--) {
+			Console::gotoXY(i, y2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(32);
+		return;
+	}
+}
+
+void Board::drawZ(Cell cell_1, Cell cell_C1, Cell cell_C2, Cell cell_2) {
+	Console::setColor(WHITE, RED);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
+	int xC1 = int((cell_C1.x_console * 10)) + 5;
+	int yC1 = int((cell_C1.y_console * 4)) + 2;
+	int xC2 = int((cell_C2.x_console * 10)) + 5;
+	int yC2 = int((cell_C2.y_console * 4)) + 2;
 	// Vẽ Z cũng có 4 dạng 
 
-	// Dạng 1: Right-Down-Right
+   // Dạng 1: Right-Up-Right
 	if (xC1 > x1 && yC1 > y2) {
 		Console::gotoXY(x1 + 1, y1);
 		putchar(17);
@@ -252,8 +525,27 @@ void Board::drawZ(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 		putchar(16);
 		return;
 	}
-
-	// Dạng 2: Right-Up-Right
+	// Đi ngược lại
+	if (xC1 < x1 && yC1 < y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(16);
+		for (int i = x1 - 2; i >= xC1; i--) {
+			Console::gotoXY(i, y1);
+			putchar(45);
+		}
+		for (int i = yC1 + 1; i <= yC2; i++) {
+			Console::gotoXY(xC1, i);
+			putchar(179);
+		}
+		for (int i = xC2; i >= x2 + 2; i--) {
+			Console::gotoXY(i, yC2);
+			putchar(45);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(17);
+		return;
+	}
+	// Dạng 2: Right-Down-Right
 	if (xC1 > x1 && yC1 < y2) {
 		Console::gotoXY(x1 + 1, y1);
 		putchar(17);
@@ -273,8 +565,28 @@ void Board::drawZ(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 		putchar(16);
 		return;
 	}
+	// Đi ngược lại
+	if (xC1 < x1 && yC1 > y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(16);
+		for (int i = x1 - 2; i >= xC1; i--) {
+			Console::gotoXY(i, y1);
+			putchar(45);
+		}
+		for (int i = yC1 - 1; i >= yC2 + 1; i--) {
+			Console::gotoXY(xC1, i);
+			putchar(179);
+		}
+		for (int i = xC2; i >= x2 + 2; i--) {
+			Console::gotoXY(i, yC2);
+			putchar(45);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(17);
+		return;
+	}
 
-	// Dạng 3: Up-right-up
+	// Dạng 3: Down-right-down
 	if (xC1 < x2 && yC1 > y1) {
 		Console::gotoXY(x1, y1 + 1);
 		putchar(30);
@@ -287,15 +599,35 @@ void Board::drawZ(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 			putchar(45);
 		}
 		for (int i = yC2 + 1; i <= y2 - 2; i++) {
-			Console::gotoXY(xC2, i);
+			Console::gotoXY(x2, i);
 			putchar(179);
 		}
 		Console::gotoXY(x2, y2 - 1);
 		putchar(31);
 		return;
 	}
+	// Đi ngược lại
+	if (xC1 > x2 && yC1 < y1) {
+		Console::gotoXY(x1, y1 - 1);
+		putchar(31);
+		for (int i = y1 - 2; i >= yC1 + 1; i--) {
+			Console::gotoXY(x1, i);
+			putchar(179);
+		}
+		for (int i = xC1; i >= xC2; i--) {
+			Console::gotoXY(i, yC1);
+			putchar(45);
+		}
+		for (int i = yC2; i >= y2 + 2; i--) {
+			Console::gotoXY(x2, i);
+			putchar(179);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(30);
+		return;
+	}
 
-	// Dạng 4: Down-right-down
+	// Dạng 4: Up-right-Up
 	if (xC1 > x2 && yC1 > y1) {
 		Console::gotoXY(x1, y1 + 1);
 		putchar(30);
@@ -315,18 +647,213 @@ void Board::drawZ(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 		putchar(31);
 		return;
 	}
+	//Đi ngược lại
+	if (xC1 < x2 && yC1 < y1) {
+		Console::gotoXY(x1, y1 - 1);
+		putchar(31);
+		for (int i = y1 - 2; i >= yC1 + 1; i--) {
+			Console::gotoXY(x1, i);
+			putchar(179);
+		}
+		for (int i = xC1; i <= xC2; i++) {
+			Console::gotoXY(i, yC1);
+			putchar(45);
+		}
+		for (int i = yC2 - 1; i >= y2 + 2; i--) {
+			Console::gotoXY(x2, i);
+			putchar(179);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(30);
+		return;
+	}
 }
 
-void Board::drawU(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
-	Console::setColor(WHITE, BLACK);
-	int x1 = int(cell_1.x_console * 10) + 5;
-	int x2 = int(cell_2.x_console * 10) + 5;
-	int y1 = int(cell_1.y_console * 4) + 2;
-	int y2 = int(cell_2.y_console * 4) + 2;
-	int xC1 = int(cell_c1.x_console * 10) + 5;
-	int yC1 = int(cell_c1.y_console * 4) + 2;
-	int xC2 = int(cell_c2.x_console * 10) + 5;
-	int yC2 = int(cell_c2.y_console * 4) + 2;
+void Board::eraseZ(Cell cell_1, Cell cell_C1, Cell cell_C2, Cell cell_2) {
+	Console::setColor(WHITE, WHITE);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
+	int xC1 = int((cell_C1.x_console * 10)) + 5;
+	int yC1 = int((cell_C1.y_console * 4)) + 2;
+	int xC2 = int((cell_C2.x_console * 10)) + 5;
+	int yC2 = int((cell_C2.y_console * 4)) + 2;
+	// Vẽ Z cũng có 4 dạng 
+
+// Dạng 1: Right-Down-Right
+	if (xC1 > x1 && yC1 > y2) {
+		Console::gotoXY(x1 + 1, y1);
+		putchar(32);
+		for (int i = x1 + 2; i <= xC1; i++) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC1 - 1; i >= yC2 + 1; i--) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i <= x2 - 2; i++) {
+			Console::gotoXY(i, yC2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+	// Đi ngược lại
+	if (xC1 < x1 && yC1 < y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(32);
+		for (int i = x1 - 2; i >= xC1; i--) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC1 + 1; i <= yC2 - 1; i++) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i >= x2 - 2; i--) {
+			Console::gotoXY(i, yC2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+	// Dạng 2: Right-Up-Right
+	if (xC1 > x1 && yC1 < y2) {
+		Console::gotoXY(x1 + 1, y1);
+		putchar(32);
+		for (int i = x1 + 2; i <= xC1; i++) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC1 + 1; i <= yC2 - 1; i++) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i <= x2 - 2; i++) {
+			Console::gotoXY(i, yC2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+	// Đi ngược lại
+	if (xC1 < x1 && yC1 > y2) {
+		Console::gotoXY(x1 - 1, y1);
+		putchar(32);
+		for (int i = x1 - 2; i >= xC1; i--) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		for (int i = yC1 - 1; i >= yC2 + 1; i--) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i >= x2 - 2; i--) {
+			Console::gotoXY(i, yC2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+	// Dạng 3: Up-right-up
+	if (xC1 > x2 && yC1 > y1) {
+		Console::gotoXY(x1, y1 + 1);
+		putchar(32);
+		for (int i = y1 + 2; i <= yC1 - 1; i++) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC1; i >= xC2; i--) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2 + 1; i <= y2 - 2; i++) {
+			Console::gotoXY(xC2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+	// Đi ngược lại
+	if (xC1 > x2 && yC1 < y1) {
+		Console::gotoXY(x1, y1 - 1);
+		putchar(32);
+		for (int i = y1 - 2; i >= yC1 + 1; i--) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC1; i >= xC2 - 1; i--) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2; i >= y2 - 2; i--) {
+			Console::gotoXY(x2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+
+	// Dạng 4: Down-right-down
+	if (xC1 < x2 && yC1 > y1) {
+		Console::gotoXY(x1, y1 + 1);
+		putchar(32);
+		for (int i = y1 + 2; i <= yC1 - 1; i++) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC1; i <= xC2; i++) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2 + 1; i <= y2 - 2; i++) {
+			Console::gotoXY(xC2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+	//Đi ngược lại
+	if (xC1 < x2 && yC1 < y1) {
+		Console::gotoXY(x1, y1 - 1);
+		putchar(32);
+		for (int i = y1 - 2; i >= yC1 + 1; i--) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		for (int i = xC1; i <= xC2; i++) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2 - 1; i >= y2 - 2; i--) {
+			Console::gotoXY(x2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+}
+
+void Board::drawU(Cell cell_1, Cell cell_C1, Cell cell_C2, Cell cell_2) {
+	Console::setColor(WHITE, RED);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
+	int xC1 = int((cell_C1.x_console * 10)) + 5;
+	int yC1 = int((cell_C1.y_console * 4)) + 2;
+	int xC2 = int((cell_C2.x_console * 10)) + 5;
+	int yC2 = int((cell_C2.y_console * 4)) + 2;
 
 	if (xC1 < x1 && yC1 < y2) {
 		for (int i = xC1; i <= x1 - 2; i++) {
@@ -348,6 +875,27 @@ void Board::drawU(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 		return;
 	}
 
+	if (xC1 < x1 && yC1 > y2) {
+		for (int i = xC1; i <= x1 - 2; i++) {
+			Console::gotoXY(i, y1);
+			putchar(45);
+		}
+		Console::gotoXY(x1 - 1, y1);
+		putchar(16);
+		for (int i = yC1 - 1; i >= yC2 + 1; i--) {
+			Console::gotoXY(xC1, i);
+			putchar(179);
+		}
+		for (int i = xC2; i <= x2 - 2; i++) {
+			Console::gotoXY(i, yC2);
+			putchar(45);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(16);
+		return;
+	}
+
+	//----------------------------------------------//
 	if (xC1 > x1 && yC1 < y2) {
 		for (int i = xC1; i >= x1 + 2; i--) {
 			Console::gotoXY(i, y1);
@@ -368,6 +916,26 @@ void Board::drawU(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 		return;
 	}
 
+	if (xC1 > x1 && yC1 > y2) {
+		for (int i = xC1; i >= x1 + 2; i--) {
+			Console::gotoXY(i, y1);
+			putchar(45);
+		}
+		Console::gotoXY(x1 + 1, y1);
+		putchar(17);
+		for (int i = yC1 - 1; i >= yC2 + 1; i--) {
+			Console::gotoXY(xC1, i);
+			putchar(179);
+		}
+		for (int i = xC2; i >= x2 + 2; i--) {
+			Console::gotoXY(i, y2);
+			putchar(45);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(17);
+		return;
+	}
+	//----------------------------------------------//
 	if (yC1 < y1 && xC1 < x2) {
 		for (int i = yC1 + 1; i <= y1 - 2; i++) {
 			Console::gotoXY(x1, i);
@@ -388,6 +956,26 @@ void Board::drawU(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 		return;
 	}
 
+	if (yC1 < y1 && xC1 > x2) {
+		for (int i = yC1 + 1; i <= y1 - 2; i++) {
+			Console::gotoXY(x1, i);
+			putchar(179);
+		}
+		Console::gotoXY(x1, y1 - 1);
+		putchar(31);
+		for (int i = xC1; i >= xC2; i--) {
+			Console::gotoXY(i, yC1);
+			putchar(45);
+		}
+		for (int i = yC2 + 1; i <= y2 - 2; i++) {
+			Console::gotoXY(xC2, i);
+			putchar(179);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(31);
+		return;
+	}
+	//-------------------------------------------------//
 	if (xC1 < x2 && yC1 > y1) {
 		for (int i = yC1 - 1; i >= y1 + 2; i--) {
 			Console::gotoXY(x1, i);
@@ -405,6 +993,199 @@ void Board::drawU(Cell cell_1, Cell cell_2, Cell cell_c1, Cell cell_c2) {
 		}
 		Console::gotoXY(x2, y2 + 1);
 		putchar(30);
+		return;
+	}
+
+	if (xC1 > x2 && yC1 > y1) {
+		for (int i = yC1 - 1; i >= y1 + 2; i--) {
+			Console::gotoXY(x1, i);
+			putchar(179);
+		}
+		Console::gotoXY(x1, y1 + 1);
+		putchar(30);
+		for (int i = xC1; i >= xC2; i--) {
+			Console::gotoXY(i, yC1);
+			putchar(45);
+		}
+		for (int i = yC2 - 1; i >= y2 + 2; i--) {
+			Console::gotoXY(xC2, i);
+			putchar(179);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(30);
+		return;
+	}
+}
+
+void Board::eraseU(Cell cell_1, Cell cell_C1, Cell cell_C2, Cell cell_2) {
+	Console::setColor(WHITE, WHITE);
+	int x1 = int((cell_1.x_console * 10)) + 5;
+	int y1 = int((cell_1.y_console * 4)) + 2;
+	int x2 = int((cell_2.x_console * 10)) + 5;
+	int y2 = int((cell_2.y_console * 4)) + 2;
+	int xC1 = int((cell_C1.x_console * 10)) + 5;
+	int yC1 = int((cell_C1.y_console * 4)) + 2;
+	int xC2 = int((cell_C2.x_console * 10)) + 5;
+	int yC2 = int((cell_C2.y_console * 4)) + 2;
+	if (xC1 < x1 && yC1 < y2) {
+		for (int i = xC1; i <= x1 - 2; i++) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		Console::gotoXY(x1 - 1, y1);
+		putchar(32);
+		for (int i = yC1 + 1; i <= yC2 - 1; i++) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i <= x2 - 2; i++) {
+			Console::gotoXY(i, yC2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+
+	if (xC1 < x1 && yC1 > y2) {
+		for (int i = xC1; i <= x1 - 2; i++) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		Console::gotoXY(x1 - 1, y1);
+		putchar(16);
+		for (int i = yC1 - 1; i >= yC2 + 1; i--) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i <= x2 - 2; i++) {
+			Console::gotoXY(i, yC2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 - 1, y2);
+		putchar(32);
+		return;
+	}
+	//----------------------------------------------//
+	if (xC1 > x1 && yC1 < y2) {
+		for (int i = xC1; i >= x1 + 2; i--) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		Console::gotoXY(x1 + 1, y1);
+		putchar(32);
+		for (int i = yC1 + 1; i <= yC2 - 1; i++) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i >= x2 + 2; i--) {
+			Console::gotoXY(i, y2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(32);
+		return;
+	}
+
+
+	if (xC1 > x1 && yC1 > y2) {
+		for (int i = xC1; i >= x1 + 2; i--) {
+			Console::gotoXY(i, y1);
+			putchar(32);
+		}
+		Console::gotoXY(x1 + 1, y1);
+		putchar(32);
+		for (int i = yC1 - 1; i >= yC2 + 1; i--) {
+			Console::gotoXY(xC1, i);
+			putchar(32);
+		}
+		for (int i = xC2; i >= x2 + 2; i--) {
+			Console::gotoXY(i, y2);
+			putchar(32);
+		}
+		Console::gotoXY(x2 + 1, y2);
+		putchar(32);
+		return;
+	}
+	//----------------------------------------------//
+	if (yC1 < y1 && xC1 < x2) {
+		for (int i = yC1 + 1; i <= y1 - 2; i++) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		Console::gotoXY(x1, y1 - 1);
+		putchar(32);
+		for (int i = xC1; i <= xC2; i++) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2 + 1; i <= y2 - 2; i++) {
+			Console::gotoXY(xC2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+
+
+	if (yC1 < y1 && xC1 > x2) {
+		for (int i = yC1 + 1; i <= y1 - 2; i++) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		Console::gotoXY(x1, y1 - 1);
+		putchar(32);
+		for (int i = xC1; i >= xC2; i--) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2 + 1; i <= y2 - 2; i++) {
+			Console::gotoXY(xC2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 - 1);
+		putchar(32);
+		return;
+	}
+	//-------------------------------------------------//
+	if (xC1 < x2 && yC1 > y1) {
+		for (int i = yC1 - 1; i >= y1 + 2; i--) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		Console::gotoXY(x1, y1 + 1);
+		putchar(32);
+		for (int i = xC1; i <= xC2; i++) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2 - 1; i >= y2 + 2; i--) {
+			Console::gotoXY(xC2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(32);
+		return;
+	}
+
+	if (xC1 > x2 && yC1 > y1) {
+		for (int i = yC1 - 1; i >= y1 + 2; i--) {
+			Console::gotoXY(x1, i);
+			putchar(32);
+		}
+		Console::gotoXY(x1, y1 + 1);
+		putchar(30);
+		for (int i = xC1; i >= xC2; i--) {
+			Console::gotoXY(i, yC1);
+			putchar(32);
+		}
+		for (int i = yC2 - 1; i >= y2 + 2; i--) {
+			Console::gotoXY(xC2, i);
+			putchar(32);
+		}
+		Console::gotoXY(x2, y2 + 1);
+		putchar(32);
 		return;
 	}
 }

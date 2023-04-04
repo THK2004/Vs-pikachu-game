@@ -58,7 +58,6 @@ void LoginScreen::loginScreen() {
 			switch (key) {
 
 			case KEY_ESC:
-				Console::playSound(MENU_SOUND);
 				std::system("cls");
 				EXIT = Menu::exitScreen();
 				if (EXIT == 0) {
@@ -69,7 +68,6 @@ void LoginScreen::loginScreen() {
 					exit(0);
 
 			case KEY_ENTER:
-				Console::playSound(MENU_SOUND);
 				std::system("cls");
 				Menu::printLogo();
 
@@ -147,48 +145,49 @@ bool LoginScreen::doLogin() {
 		}
 
 		Console::gotoXY(30, 22);
-		std::cout << "Create new password: ";
+		std::cout << "Enter your password: ";
 
 		Console::showCursor(true);
 		Console::gotoXY(52, 22);
 		std::getline(std::cin, login.Password);
 		Console::showCursor(false);
 
-
 		ifstream ifs("Account\\account.txt");
 
 		if (!ifs.is_open()) {
 			exit(1);
-		}
+		}	
 
-		while (!ifs.eof()) {
-			line.clear();
-			string token = "";
+		if (login.UserName != "" && login.Password != "") {
+			while (!ifs.eof()) {
+				line.clear();
+				string token = "";
 
-			std::getline(ifs, line);	//line = "username/password"
-			stringstream ss(line);
+				std::getline(ifs, line);	//line = "username/password"
+				stringstream ss(line);
 
-			getline(ss, token, '/');	//token = "username"
-			if (token == login.UserName)
-				checkUserName = 1;
-			getline(ss, token);			//token = "password"
-			if (token == login.Password)
-				checkPassWord = 1;
+				getline(ss, token, '/');	//token = "username"
+				if (token == login.UserName)
+					checkUserName = 1;
+				getline(ss, token);			//token = "password"
+				if (token == login.Password)
+					checkPassWord = 1;
 
-			if (checkUserName && checkPassWord) {
-				Console::setColor(WHITE, GREEN);
-				Console::gotoXY(32, 26);
-				std::cout << "Login Successfully!";
-				Console::setColor(WHITE, BLACK);
-				ifs.close();
-				Sleep(1000);
-				std::system("cls");
+				if (checkUserName && checkPassWord) {
+					Console::setColor(WHITE, GREEN);
+					Console::gotoXY(32, 26);
+					std::cout << "Login Successfully!";
+					Console::setColor(WHITE, BLACK);
+					ifs.close();
+					Sleep(1000);
+					std::system("cls");
 
-				return 1;
-			}
-			else {
-				checkUserName = 0;
-				checkPassWord = 0;
+					return 1;
+				}
+				else {
+					checkUserName = 0;
+					checkPassWord = 0;
+				}
 			}
 		}
 
@@ -217,8 +216,9 @@ bool LoginScreen::doLogin() {
 		true_while_flag = 1;
 		ifs.close();
 
-		if (true_while_flag == 0)
+		if (true_while_flag == 0) {
 			break;
+		}
 	}
 }
 

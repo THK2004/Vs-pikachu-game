@@ -24,4 +24,7 @@ struct GamePlay {
 	int checkMoreLineY(Cell**, Cell, Cell, int);		//int is for down (+1) or up (-1)
 
 	pair<int, int> check2Cells(Cell**, int, int, Cell, Cell);		//Check if 2 cells can be matched return with (-2,y) or (x, -2) if a path (x or y) can be found, return (-2, -2) if not found..
+	
+	void drawLine2Cells(Cell**, int, int, int, int, Cell, Cell);
+	void eraseLine2Cells(Cell**, int, int, int, int, Cell, Cell);
 };

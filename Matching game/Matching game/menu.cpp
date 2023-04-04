@@ -71,7 +71,6 @@ int Menu::mainMenu() {
             key = _getch();
             switch (key) {
             case KEY_ENTER:
-                Console::playSound(MENU_SOUND);
                 std::system("cls");
                 return curChoice;
             case KEY_UP:
@@ -187,7 +186,6 @@ int Menu::modeSelectMenu() {
             key = _getch();
             switch (key) {
             case KEY_ENTER:
-                Console::playSound(MENU_SOUND);
                 std::system("cls");
                 return curChoice;
             case KEY_UP:
@@ -415,7 +413,6 @@ int Menu::exitScreen() {
             key = _getch();
             switch (key) {
             case KEY_ENTER:
-                Console::playSound(MENU_SOUND);
                 std::system("cls");
                 return curChoice;
             case KEY_RIGHT:

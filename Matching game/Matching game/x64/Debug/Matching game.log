@@ -1,4 +1,2 @@
-﻿  main.cpp
-D:\SourceCode\KTLT\VS 1st project\Matching game\Matching game\main.cpp(20,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-D:\SourceCode\KTLT\VS 1st project\Matching game\Matching game\main.cpp(21,9): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
+﻿  board.cpp
   Matching game.vcxproj -> D:\SourceCode\KTLT\VS 1st project\Matching game\x64\Debug\Matching game.exe

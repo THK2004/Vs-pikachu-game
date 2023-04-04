@@ -335,12 +335,17 @@ void GameMode::createNormalGame() {
 						Sleep(250);
 						check = gameplay.check2Cells(board.pBoard, HEIGHT, WIDTH, board.pBoard[selectedCell[0].first][selectedCell[0].second], board.pBoard[selectedCell[1].first][selectedCell[1].second]);
 
-						if (check.first != -2 || check.second != -2) {
+						if (check.first != -2 || check.second != -2) { //check đúng
 							gameplay.score += 2;
 
 							board.pBoard[selectedCell[0].first][selectedCell[0].second].drawCell(GREEN);
 							board.pBoard[selectedCell[1].first][selectedCell[1].second].drawCell(GREEN);
+							gameplay.drawLine2Cells(board.pBoard, HEIGHT, WIDTH, TOP, LEFT, board.pBoard[selectedCell[0].first][selectedCell[0].second], board.pBoard[selectedCell[1].first][selectedCell[1].second]);
+							Console::setColor(WHITE, BLACK);
 							Sleep(500);
+
+							gameplay.eraseLine2Cells(board.pBoard, HEIGHT, WIDTH, TOP, LEFT, board.pBoard[selectedCell[0].first][selectedCell[0].second], board.pBoard[selectedCell[1].first][selectedCell[1].second]);
+							Console::setColor(WHITE, BLACK);
 
 							board.pBoard[selectedCell[0].first][selectedCell[0].second].deleteCell();
 							board.pBoard[selectedCell[1].first][selectedCell[1].second].deleteCell();
@@ -434,18 +439,18 @@ void GameMode::createHardGame_2DPointerArray() {
 		gameplay.validPair = 0;
 
 		//Count remainingCells
-		for (int i = 0; i < HEIGHT; i++)
-			for (int j = 0; j < WIDTH; j++)
+		for (int i = 0; i < H_HEIGHT; i++)
+			for (int j = 0; j < H_WIDTH; j++)
 				if (board.pBoard[i][j].pokemon != '0')
 					gameplay.remainingCell += 1;
 
 
 		//Count validPairs
-		for (int i = 0; i < HEIGHT * WIDTH; i++) {
-			if (board.pBoard[i / WIDTH][i % WIDTH].pokemon != '0')
-				for (int j = i + 1; j < HEIGHT * WIDTH; j++) {
-					if (board.pBoard[j / WIDTH][j % WIDTH].pokemon == board.pBoard[i / WIDTH][i % WIDTH].pokemon) {
-						check = gameplay.check2Cells(board.pBoard, HEIGHT, WIDTH, board.pBoard[j / WIDTH][j % WIDTH], board.pBoard[i / WIDTH][i % WIDTH]);
+		for (int i = 0; i < H_HEIGHT * H_WIDTH; i++) {
+			if (board.pBoard[i / H_WIDTH][i % H_WIDTH].pokemon != '0')
+				for (int j = i + 1; j < H_HEIGHT * H_WIDTH; j++) {
+					if (board.pBoard[j / H_WIDTH][j % H_WIDTH].pokemon == board.pBoard[i / H_WIDTH][i % H_WIDTH].pokemon) {
+						check = gameplay.check2Cells(board.pBoard, H_HEIGHT, H_WIDTH, board.pBoard[j / H_WIDTH][j % H_WIDTH], board.pBoard[i / H_WIDTH][i % H_WIDTH]);
 
 						if (check.first != -2 || check.second != -2)
 							gameplay.validPair += 1;
@@ -480,9 +485,9 @@ void GameMode::createHardGame_2DPointerArray() {
 		}
 
 		//Draw selected Cell
-		for (int i = 0; i < HEIGHT * WIDTH; i++)
-			if (board.pBoard[i / WIDTH][i % WIDTH].isSelected)
-				board.pBoard[i / WIDTH][i % WIDTH].drawCell(YELLOW);
+		for (int i = 0; i < H_HEIGHT * H_WIDTH; i++)
+			if (board.pBoard[i / H_WIDTH][i % H_WIDTH].isSelected)
+				board.pBoard[i / H_WIDTH][i % H_WIDTH].drawCell(YELLOW);
 
 		//Draw cell pointed by cursor
 		board.pBoard[curPos.first][curPos.second].drawCell(LIGHT_RED);
@@ -509,7 +514,7 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				//Check về bên phải cùng hàng
 				if (isCurFound == 0) {
-					for (int j = curPos.second + 1; j < WIDTH; j++)
+					for (int j = curPos.second + 1; j < H_WIDTH; j++)
 						if (board.pBoard[curPos.first][j].pokemon != '0') {
 							isCurFound = 1;
 							curPos.second = j;
@@ -519,8 +524,8 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				//Check theo đường xiên xuống 
 				if (isCurFound == 0) {
-					for (int i = curPos.first + 1; i < HEIGHT; i++) {
-						for (int j = curPos.second + 1; j < WIDTH; j++) {
+					for (int i = curPos.first + 1; i < H_HEIGHT; i++) {
+						for (int j = curPos.second + 1; j < H_WIDTH; j++) {
 							if (board.pBoard[i][j].pokemon != '0') {
 								isCurFound = 1;
 								curPos.first = i;
@@ -536,7 +541,7 @@ void GameMode::createHardGame_2DPointerArray() {
 				//Check xiên lên
 				if (isCurFound == 0) {
 					for (int i = curPos.first - 1; i >= 0; i--) {
-						for (int j = curPos.second + 1; j < WIDTH; j++) {
+						for (int j = curPos.second + 1; j < H_WIDTH; j++) {
 							if (board.pBoard[i][j].pokemon != '0') {
 								isCurFound = 1;
 								curPos.first = i;
@@ -574,7 +579,7 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				//Check theo đường xiên xuống 
 				if (isCurFound == 0) {
-					for (int i = curPos.first + 1; i < HEIGHT; i++) {
+					for (int i = curPos.first + 1; i < H_HEIGHT; i++) {
 						for (int j = curPos.second - 1; j >= 0; j--) {
 							if (board.pBoard[i][j].pokemon != '0') {
 								isCurFound = 1;
@@ -606,7 +611,7 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				//check ngược lại
 				if (isCurFound == 0) {
-					for (int j = WIDTH - 1; j > curPos.second; j--)
+					for (int j = H_WIDTH - 1; j > curPos.second; j--)
 						if (board.pBoard[curPos.first][j].pokemon != '0') {
 							isCurFound = 1;
 							curPos.second = j;
@@ -618,7 +623,7 @@ void GameMode::createHardGame_2DPointerArray() {
 			case KEY_DOWN:
 				//Check thẳng xuống
 				if (isCurFound == 0) {
-					for (int i = curPos.first + 1; i < HEIGHT; i++)
+					for (int i = curPos.first + 1; i < H_HEIGHT; i++)
 						if (board.pBoard[i][curPos.second].pokemon != '0') {
 							isCurFound = 1;
 							curPos.first = i;
@@ -628,8 +633,8 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				//Check theo đường xiên xuống qua phải
 				if (isCurFound == 0) {
-					for (int j = curPos.second + 1; j < WIDTH; j++) {
-						for (int i = curPos.first + 1; i < HEIGHT; i++) {
+					for (int j = curPos.second + 1; j < H_WIDTH; j++) {
+						for (int i = curPos.first + 1; i < H_HEIGHT; i++) {
 							if (board.pBoard[i][j].pokemon != '0') {
 								isCurFound = 1;
 								curPos.first = i;
@@ -645,7 +650,7 @@ void GameMode::createHardGame_2DPointerArray() {
 				//Check xiên xuống qua trái
 				if (isCurFound == 0) {
 					for (int j = curPos.second - 1; j >= 0; j--) {
-						for (int i = curPos.first + 1; i < HEIGHT; i++) {
+						for (int i = curPos.first + 1; i < H_HEIGHT; i++) {
 							if (board.pBoard[i][j].pokemon != '0') {
 								isCurFound = 1;
 								curPos.first = i;
@@ -683,7 +688,7 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				//Check theo đường xiên lên qua phải
 				if (isCurFound == 0) {
-					for (int j = curPos.second + 1; j < WIDTH; j++) {
+					for (int j = curPos.second + 1; j < H_WIDTH; j++) {
 						for (int i = curPos.first - 1; i >= 0; i--) {
 							if (board.pBoard[i][j].pokemon != '0') {
 								isCurFound = 1;
@@ -715,7 +720,7 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				//check ngược lại
 				if (isCurFound == 0) {
-					for (int i = HEIGHT - 1; i > curPos.first; i--)
+					for (int i = H_HEIGHT - 1; i > curPos.first; i--)
 						if (board.pBoard[i][curPos.second].pokemon != '0') {
 							isCurFound = 1;
 							curPos.first = i;
@@ -747,14 +752,19 @@ void GameMode::createHardGame_2DPointerArray() {
 
 					if (remainCell == 0) {	//Nếu đã chọn dược 2 cell
 						Sleep(250);
-						check = gameplay.check2Cells(board.pBoard, HEIGHT, WIDTH, board.pBoard[selectedCell[0].first][selectedCell[0].second], board.pBoard[selectedCell[1].first][selectedCell[1].second]);
+						check = gameplay.check2Cells(board.pBoard, H_HEIGHT, H_WIDTH, board.pBoard[selectedCell[0].first][selectedCell[0].second], board.pBoard[selectedCell[1].first][selectedCell[1].second]);
 
 						if (check.first != -2 || check.second != -2) {
 							gameplay.score += 2;
 
 							board.pBoard[selectedCell[0].first][selectedCell[0].second].drawCell(GREEN);
 							board.pBoard[selectedCell[1].first][selectedCell[1].second].drawCell(GREEN);
+							gameplay.drawLine2Cells(board.pBoard, HEIGHT, WIDTH, TOP, LEFT, board.pBoard[selectedCell[0].first][selectedCell[0].second], board.pBoard[selectedCell[1].first][selectedCell[1].second]);
+							Console::setColor(WHITE, BLACK);
 							Sleep(500);
+
+							gameplay.eraseLine2Cells(board.pBoard, HEIGHT, WIDTH, TOP, LEFT, board.pBoard[selectedCell[0].first][selectedCell[0].second], board.pBoard[selectedCell[1].first][selectedCell[1].second]);
+							Console::setColor(WHITE, BLACK);
 
 							board.pBoard[selectedCell[0].first][selectedCell[0].second].deleteCell();
 							board.pBoard[selectedCell[1].first][selectedCell[1].second].deleteCell();

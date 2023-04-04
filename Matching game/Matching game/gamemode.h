@@ -11,8 +11,8 @@
 #define WIDTH 5
 
 //For hard mode
-#define H_TOP 26
-#define H_LEFT 10
+#define H_TOP TOP
+#define H_LEFT LEFT
 #define H_HEIGHT 4
 #define H_WIDTH 5
 

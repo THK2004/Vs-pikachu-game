@@ -11,7 +11,7 @@ struct Cell {
 	float y_console = 0.0;										//Vị trí y trên console
 	char pokemon = '0';									//pokemon = '0' có nghĩa là ô trống.
 	bool isSelected = 0;								//0 = ko chọn, 1 = chọn
-	void drawCell(int);									//Vẽ ô tại điểm (x, y) 
+	void drawCell(int);									//Vẽ ô tại điểm (x, y) màu int
 	void deleteCell();
 };
 
@@ -24,17 +24,15 @@ struct Board {
 
 	Board(int, int, int, int);							//Init a board
 
-	void drawI(Cell, Cell);
-	void drawL(Cell, Cell, Cell);
-	void drawZ(Cell, Cell, Cell, Cell);
-	void drawU(Cell, Cell, Cell, Cell);
-	void drawLine2Cells(Cell**, Cell, Cell, pair<int, int>);
+	static void drawI(Cell, Cell);
+	static void drawL(Cell, Cell, Cell);
+	static void drawZ(Cell, Cell, Cell, Cell);
+	static void drawU(Cell, Cell, Cell, Cell);
 
-	void eraseI(Cell, Cell);
-	void eraseL(Cell, Cell, Cell);
-	void eraseZ(Cell, Cell, Cell, Cell);
-	void eraseU(Cell, Cell, Cell, Cell);
-	void eraseLine2Cells(Cell**, Cell, Cell, pair<int, int>);
+	static void eraseI(Cell, Cell);
+	static void eraseL(Cell, Cell, Cell);
+	static void eraseZ(Cell, Cell, Cell, Cell);
+	static void eraseU(Cell, Cell, Cell, Cell);
 
 	void drawBoard(int, int, Cell**);					//Vẽ board trên console
 	void deleteBoard(int, int, Cell**);					//Xóa board
