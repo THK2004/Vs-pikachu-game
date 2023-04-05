@@ -21,4 +21,5 @@ struct Menu
 	static void printDoubleRectangle(int, int, int, int);	//In hình chữ nhật cạnh 2 nét
 	static void printAnimation();							//In hiệu ứng mở đầu
 	static void printPikachu();								//In pikachu
+	static void winScreen();
 };

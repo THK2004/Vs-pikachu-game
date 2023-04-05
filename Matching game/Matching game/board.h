@@ -3,6 +3,8 @@
 #include <iostream>
 #include "console.h"
 #include "menu.h"
+#include <vector>
+#include <cstdlib>
 
 struct Cell {
 	int x = 0;
@@ -23,6 +25,8 @@ struct Board {
 	Cell** pBoard = NULL;
 
 	Board(int, int, int, int);							//Init a board
+
+	void shuffle(int, int, Cell**);
 
 	static void drawI(Cell, Cell);
 	static void drawL(Cell, Cell, Cell);

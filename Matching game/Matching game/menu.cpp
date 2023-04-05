@@ -1,4 +1,4 @@
-#include "menu.h"
+﻿#include "menu.h"
 
 
 int Menu::mainMenu() {
@@ -279,38 +279,59 @@ void Menu::printDoubleRectangle(int left, int top, int width, int height)
 
 void Menu::printAnimation()
 {
-    srand(time(NULL));
+    srand((unsigned int)time(NULL));
     Console::playSound(WIN_SOUND);
+    
     printLogo();
     printPikachu();
-    char symbolpos[] = { 5,0,19,0,33,0,47,0,61,0,75,0,89,0,0,103,5,13,19,
-                         13,33,13,47,13,61,13,75,13,89,13,13,103,13,18,26,18,40,18,
-                         54,18,68,18,82,18,18,96,5,24,19,24,33,24,47,24,61,24,75,24,
-                         89,24,24,103,12,30,26,30,40,30,54,30,68,30,82,30,96,30};
-    int n = sizeof(symbolpos) / sizeof(symbolpos[0]) / 2;
-    bool turn = 0;
-    unsigned char symbol[] = {4,15};
+
+    int colorList[] = { 1, 2, 4, 5, 6 };
     int loop = 10;
-    while (loop--)
-    {
-        for (int i = 0; i < n; i += 2)
-        {
-            Console::setColor(WHITE, rand()%16);
-            Console::gotoXY(symbolpos[i * 2], symbolpos[i * 2 + 1]);
-            putchar(symbol[turn]);
+
+    int symbol[] = { 4, 15 };
+    bool turn = 0;
+
+    while (loop--) {
+        Console::setColor(WHITE, colorList[rand() % 5]);
+
+        for (int i = 0; i < 6; i++) {
+            for (int j = 0; j < 4; j++) {
+                Console::gotoXY(i * 20 + 3, j * 10 + 1);
+                std::putchar(symbol[turn]);
+            }
         }
-        for (int i = 1; i < n; i += 2)
-        {
-            Console::setColor(WHITE, rand()%16);
-            Console::gotoXY(symbolpos[i * 2], symbolpos[i * 2 + 1]);
-            putchar(symbol[!turn]);
+
+        for (int i = 0; i < 5; i++) {
+            for (int j = 0; j < 2; j++) {
+                Console::gotoXY(i * 20 + 13, j * 10 + 16);
+                std::putchar(symbol[turn]);
+            }
         }
-        Console::gotoXY(0, 0);
+
+        for (int i = 6; i < 8; i++) {
+            for (int j = 0; j < 2; j++) {
+                Console::gotoXY(i * 20 + 3, j * 10 + 1);
+                std::putchar(symbol[turn]);
+            }
+        }
+
+        Console::gotoXY(13, 6);
+        std::putchar(symbol[turn]);
+        Console::gotoXY(113, 6);
+        std::putchar(symbol[turn]);
+        Console::gotoXY(133, 6);
+        std::putchar(symbol[turn]);
+        Console::gotoXY(123, 31);
+        std::putchar(symbol[turn]);
+        Console::gotoXY(143, 31);
+        std::putchar(symbol[turn]);
+
         turn = !turn;
-        Sleep(400);
+        Sleep(300);
     }
+  
     Console::setColor(WHITE, BLACK);
-    system("cls");
+    std::system("cls");
 }
 
 void Menu::printLogo() {
@@ -467,4 +488,200 @@ void Menu::leaderBoard() {
     int key = _getch();
     system("cls");
     return;
+}
+
+void Menu::helpScreen() {
+    Console::setColor(WHITE, BLACK);
+    Console::clearConsole();
+
+    int left = 10, top = 2, width = 125, height = 28;
+    int line1 = 6, line2 = 19;
+    int line3 = 25, line4 = 15, line5 = 20;
+
+    Menu::printRectangle(left, top, width, height);
+    Console::gotoXY(left + 1, line1 + 2);
+    for (int i = 0; i < width; i++) {
+        putchar(196);
+    }
+    Console::gotoXY(left + 1, line4 + 2);
+    for (int i = 0; i < width; i++) {
+        putchar(196);
+    }
+    for (int i = 1; i < height; i++) {
+        Console::gotoXY(line3, top + i);
+        putchar(179);
+    }
+    Console::gotoXY(line3, line1 + 2);
+    putchar(197);
+
+    // Write information into the board
+    Console::setColor(WHITE, BLACK);
+    Console::gotoXY(left + 3, top + 2);
+    std::cout << "KEYS:";
+    Console::gotoXY(left + 20, top + 1);
+    putchar(249);
+    cout << "Up arrow: to move up";
+    Console::gotoXY(left + 52, top + 1);
+    putchar(249);
+    cout << "Down arrow: to move down";
+    Console::gotoXY(left + 20, top + 3);
+    putchar(249);
+    cout << "Left arrow: to move left";
+    Console::gotoXY(left + 52, top + 3);
+    putchar(249);
+    cout << "Right arrow: to move right";
+    Console::gotoXY(left + 83, top + 1);
+    putchar(249);
+    cout << "Enter: to select or deselect a cell.";
+    Console::gotoXY(left + 83, top + 3);
+    putchar(249);
+    cout << "A: to assist you by making suggestion.";
+    Console::gotoXY(left + 20, top + 5);
+    putchar(249);
+    cout << "S: to shuffle the board.";
+    Console::gotoXY(left + 52, top + 5);
+    putchar(249);
+    cout << "I: for more infomation.";
+
+
+
+    Console::gotoXY(left + 3, top + 10);
+    cout << "Rules:";
+    Console::gotoXY(left + 17, top + 7);
+    int left1 = left + 17;
+    putchar(249);
+    cout << "Pikachu Game (also known as the Pikachu Onet Connect Animal) includes a board of multiple cells, each";
+    Console::gotoXY(left1 + 1 , top + 8);
+    cout << "of which presents letters from A to Z.";
+    Console::gotoXY(left1, top + 10);
+    putchar(249);
+    cout << "The player have to find out and match a pair of cells which contain the same feature and connect them";
+    Console::gotoXY(left1 + 1, top + 11);
+    cout << "in I, L, Z or U pattern.";
+    Console::gotoXY(left1, top + 13);
+    putchar(249);
+    cout << "If the match is legal, two cells will disappear. The game ends when all valid pairs are found.";
+    Console::gotoXY(left1 + 1, top + 14);
+    cout << "A valid pair satisfies two conditions: connectable and identical.";
+
+
+    Console::gotoXY(left + 3, top + 17);
+    cout << "Score:";
+    Console::gotoXY(left + 17, top + 16);
+    putchar(249);
+    cout << "The game start with 0 points. And you can't have minus point.";
+    Console::gotoXY(left + 17, top + 17);
+    putchar(249);
+    cout << "Any valid pair of cell is found give you 2 points.";
+    Console::gotoXY(left + 17, top + 18);
+    putchar(249);
+    cout << "There is time count for each attempt but no penalty.";
+    Console::gotoXY(left + 17, top + 19);
+    putchar(249);
+    cout << "Any help like shuffle manually or move suggestion would decrease your point by 2.";
+
+    Console::gotoXY(left + 1, line5 + 2);
+    for (int i = 0; i < width; i++) {
+        putchar(196);
+    }
+    Console::gotoXY(line3, line5 + 2);
+    putchar(197);
+    Console::gotoXY(line3, line4 + 2);
+    putchar(197);
+
+    Console::gotoXY(left + 3, top + 22);
+    cout << "About us:";
+    Console::gotoXY(left + 17, top + 21);
+    putchar(249);
+    cout << "We are first-year students in academic year 2022 - 2023. And we're from IT department (FIT) of";
+    Console::gotoXY(left + 18, top + 22);
+    cout << "Viet Nam National University Ho Chi Minh City - University of Science (VNUHCM-US).";
+    Console::gotoXY(left + 17, top + 24);
+    putchar(249);
+    cout << "Name: Tran Huy Khanh                    Student ID: 22127191                    Class: 22CLC03";
+    Console::gotoXY(left + 17, top + 25);
+    putchar(249);
+    cout << "Name: Hoang Bao Khanh                   Student ID: 22127189                    Class: 22CLC03";
+
+    Console::gotoXY(left + 17, top + 27);
+    putchar(249);
+    cout << "This game is Programming technique class project which begins in March 21st, 2023.";
+
+    Console::setColor(WHITE, BLACK);
+    Menu::printRectangle(59, 32, 23, 2);
+    Console::gotoXY(60, 33);
+    cout << "Press any key to return";
+
+    int key = _getch();
+    system("cls");
+    return;
+}
+
+void Menu::winScreen() {
+    srand((unsigned int)time(NULL));
+    //Console::playSound(WIN_SOUND);
+    Console::setColor(WHITE, GREEN);
+    cout << R"(
+                             __________  _   ____________  ___  ________  ____    ___  ______________  _   _______
+                            / ____/ __ \/ | / / ____/ __ \/   |/_  __/ / / / /   /   |/_  __/  _/ __ \/ | / / ___/
+                           / /   / / / /  |/ / / __/ /_/ / /| | / / / / / / /   / /| | / /  / // / / /  |/ /\__ \ 
+                          / /___/ /_/ / /|  / /_/ / _, _/ ___ |/ / / /_/ / /___/ ___ |/ / _/ // /_/ / /|  /___/ / 
+                          \____/\____/_/ |_/\____/_/ |_/_/  |_/_/  \____/_____/_/  |_/_/ /___/\____/_/ |_//____/  
+                                                                                        
+	)";
+
+    Console::setColor(WHITE, RED);
+    Console::gotoXY(55, 8);
+    cout << "BRAVO !!! YOU FINISHED THE GAME";
+
+    Console::gotoXY(59, 10);
+    cout << "YOUR SCORE: " << 48;
+    Console::gotoXY(59, 11);
+    cout << "YOUR TIME: " << 48;
+
+    Console::gotoXY(30, 18);
+
+    int loop = 30;
+    while (loop--) {
+        Console::setColor(WHITE, rand() % 7);
+
+
+        Console::gotoXY(30, 18);
+        cout << R"(
+                                                                                      .''.       
+                                                          .''.      .        *''*    :_\/_:     . 
+                                                         :_\/_:   _\(/_  .:.*_\/_*   : /\ :  .'.:.'.
+                                                     .''.: /\ :   ./)\   ':'* /\ * :  '..'.  -=:o:=-
+                                                    :_\/_:'.:::.    ' *''*    * '.\'/.' _\(/_'.':'.'
+                                                    : /\ : :::::     *_\/_*     -= o =-  /)\    '  *
+                                                     '..'  ':::'     * /\ *     .'/.\'.   '
+                                                                 *            *..*         :
+                                                                       *
+                                                          *
+		)";
+
+        Console::gotoXY(5, 13);
+        Console::setColor(WHITE, RED);
+        cout << R"(
+	
+         `;-.          ___,
+           `.`\_...._/`.-"`
+             \        /      ,
+             /()   () \    .' `-._
+            |)  .    ()\  /   _.'
+            \  -'-     ,; '. <
+             ;.__     ,;|   > \
+            / ,    / ,  |.-'.-'
+           (_/    (_/ ,;|.<`
+             \    ,     ;-`
+              >   \    /
+             (_,-'`> .'
+                  (_,'
+		)";
+
+        Menu::printPikachu();
+        Sleep(200);
+    }
+    Console::setColor(WHITE, BLACK);
+    std::system("cls");
 }

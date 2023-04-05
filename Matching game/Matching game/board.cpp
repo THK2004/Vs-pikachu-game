@@ -98,6 +98,32 @@ void Board::deleteBoard(int hieght, int width, Cell** pBoard) {
 	}
 }
 
+void Board::shuffle(int height, int width, Cell** pBoard) {
+	std::vector<char> pokeList;
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (pBoard[i][j].pokemon != '0') {
+				pokeList.push_back(pBoard[i][j].pokemon);
+			}
+		}
+	}
+	std::vector<char> pokeListAfterShuffle;
+	int k = pokeList.size();
+	for (int i = 0; i < k; i++) {
+		int n = rand() % pokeList.size();
+		pokeListAfterShuffle.push_back( pokeList[n] );
+		pokeList.erase(pokeList.begin() + n);
+	}
+	for (int i = 0; i < height * width; i++) {
+		if (pBoard[i / width][i % width].pokemon != '0') {
+			pBoard[i / width][i % width].pokemon = pokeListAfterShuffle[0];
+			pokeListAfterShuffle.erase(pokeListAfterShuffle.begin());
+		}	
+	}
+	
+	return;
+}
+
 void Board::drawI(Cell cell_1, Cell cell_2) {
 	Console::setColor(WHITE, RED);
 	int x1 = int((cell_1.x_console * 10)) + 5;
@@ -348,7 +374,7 @@ void Board::drawL(Cell cell_1, Cell cell_C, Cell cell_2) {
 			putchar(45);
 		}
 		Console::gotoXY(x2 + 1, y2);
-		putchar(16);
+		putchar(17);
 		return;
 	}
 }
@@ -365,7 +391,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 	if (xC < x2 && yC > y1) {
 		Console::gotoXY(x1, y1 + 1);
 		putchar(32);
-		for (int i = y2 + 2; i <= yC - 1; i++) {
+		for (int i = y1 + 2; i <= yC - 1; i++) {
 			Console::gotoXY(x1, i);
 			putchar(32);
 		}
@@ -377,6 +403,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 		putchar(32);
 		return;
 	}
+	// Hoán vị cell_1 và cell_2
 	if (xC < x1 && yC > y2) {
 		Console::gotoXY(x1 - 1, y1);
 		putchar(32);
@@ -399,7 +426,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 		putchar(32);
 		for (int i = y1 - 2; i >= yC + 1; i--) {
 			Console::gotoXY(x1, i);
-			putchar(32);
+			putchar(132);
 		}
 		for (int i = xC; i <= x2 - 2; i++) {
 			Console::gotoXY(i, y2);
@@ -409,7 +436,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 		putchar(32);
 		return;
 	}
-
+	// Hoán vị cell-1 và cell_2
 	if (xC < x1 && yC < y2) {
 		Console::gotoXY(x1 - 1, y1);
 		putchar(32);
@@ -417,7 +444,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 			Console::gotoXY(i, y1);
 			putchar(32);
 		}
-		for (int i = yC; i <= y2 - 2; i++) {
+		for (int i = yC + 1; i <= y2 - 2; i++) {
 			Console::gotoXY(x2, i);
 			putchar(32);
 		}
@@ -442,7 +469,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 		putchar(32);
 		return;
 	}
-
+	//Hoán vị trí cell_1 và cell_2
 	if (yC < y1 && xC > x2) {
 		Console::gotoXY(x1, y1 - 1);
 		putchar(32);
@@ -450,7 +477,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 			Console::gotoXY(x1, i);
 			putchar(32);
 		}
-		for (int i = xC - 1; i >= x2 + 2; i--) {
+		for (int i = xC; i >= x2 + 2; i--) {
 			Console::gotoXY(i, y2);
 			putchar(32);
 		}
@@ -475,7 +502,7 @@ void Board::eraseL(Cell cell_1, Cell cell_C, Cell cell_2) {
 		putchar(32);
 		return;
 	}
-
+	//Hoán vị trí cell_1 và cell_2
 	if (yC > y1 && xC > x2) {
 		Console::gotoXY(x1, y1 + 1);
 		putchar(32);
