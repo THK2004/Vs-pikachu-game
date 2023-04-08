@@ -1,6 +1,8 @@
 ﻿#include "board.h"
 
 Board::Board(int _top, int _left, int _height, int _width) {
+	srand((unsigned int)time(NULL));
+
 	top = _top;
 	left = _left;
 	height = _height;

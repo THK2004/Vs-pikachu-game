@@ -7,8 +7,11 @@
 
 int main() {
 	Console::setupConsole();
-	Menu::printAnimation();
-	LoginScreen::loginScreen();
+	//Menu::printAnimation();
+	//LoginScreen::loginScreen();
+	
+	//GameMode::createHardGame_LinkedList();
+	//cin.get();
 
 	//Board board(TOP, LEFT, HEIGHT, WIDTH);
 	//board.drawL(board.pBoard[2][2], board.pBoard[3][2], board.pBoard[3][1]);
@@ -31,20 +34,22 @@ int main() {
 			mode = Menu::modeSelectMenu();
 			if (mode == 0)
 				GameMode::createNormalGame();
-			if (mode == 1)
-				GameMode::createHardGame_2DPointerArray();
-			if (mode == 2)
+			else if (mode == 1) {
+				//GameMode::createHardGame_2DPointerArray();
+				GameMode::createHardGame_LinkedList();
+			}
+			else if (mode == 2)
 				Menu::helpScreen();
-			if (mode == 3)
+			else if (mode == 3)
 				status = Menu::mainMenu();
 		}
 
-		if (status == 2) {
+		else if (status == 2) {
 			Menu::leaderBoard();
 			status = Menu::mainMenu();
 		}
 
-		if (status == 3) {
+		else if (status == 3) {
 			exit = Menu::exitScreen();
 			if (exit == 0)
 				status = Menu::mainMenu();
