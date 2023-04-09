@@ -1,4 +1,4 @@
-#include "console.h"
+﻿#include "console.h"
 #include "menu.h"
 #include "board.h"
 #include "gameplay.h"
@@ -8,51 +8,44 @@
 int main() {
 	Console::setupConsole();
 	//Menu::printAnimation();
-	//LoginScreen::loginScreen();
+
+	Account account;
+	LoginScreen::loginScreen(account);
 	
 	//GameMode::createHardGame_LinkedList();
-	//cin.get();
-
-	//Board board(TOP, LEFT, HEIGHT, WIDTH);
-	//board.drawL(board.pBoard[2][2], board.pBoard[3][2], board.pBoard[3][1]);
-	//cin.get();
-	//board.shuffle(HEIGHT, WIDTH, board.pBoard);
-	//board.drawBoard(HEIGHT, WIDTH, board.pBoard);
-	//cin.get();
-	//board.drawL(board.pBoard[0][0], board.pBoard[2][0], board.pBoard[2][1]);
-	//cin.get();
-	//board.eraseL(board.pBoard[0][0], board.pBoard[2][0], board.pBoard[2][1]);
 	//cin.get();
 
 	int status = 0;
 	int mode = 0;
 	int exit = 0;
 
-	status = Menu::mainMenu();
+	status = Menu::mainMenu(account);
 	while (status != 3 || exit != 1) {
 		if (status == 0) {
-			mode = Menu::modeSelectMenu();
+			mode = Menu::modeSelectMenu(account);
 			if (mode == 0)
-				GameMode::createNormalGame();
+				GameMode::createNormalGame(account);
 			else if (mode == 1) {
-				//GameMode::createHardGame_2DPointerArray();
-				GameMode::createHardGame_LinkedList();
+				GameMode::createHardGame_2DPointerArray(account);
+				//GameMode::createHardGame_LinkedList(account);
 			}
-			else if (mode == 2)
+			else if (mode == 2) {
+				Console::clearConsole();
 				Menu::helpScreen();
+			}
 			else if (mode == 3)
-				status = Menu::mainMenu();
+				status = Menu::mainMenu(account);
 		}
 
 		else if (status == 2) {
 			Menu::leaderBoard();
-			status = Menu::mainMenu();
+			status = Menu::mainMenu(account);
 		}
 
 		else if (status == 3) {
 			exit = Menu::exitScreen();
 			if (exit == 0)
-				status = Menu::mainMenu();
+				status = Menu::mainMenu(account);
 		}
 	}
 

@@ -6,13 +6,14 @@
 #include <fstream>
 #include <conio.h>
 #include <ctime>
+#include "login.h"
 
 using namespace std;
 
 struct Menu
 {
-	static int mainMenu();									//Menu
-	static int modeSelectMenu();							//Menu play
+	static int mainMenu(Account);									//Menu
+	static int modeSelectMenu(Account);							//Menu play
 	static void leaderBoard();								//Màn hình load file leaderboard
 	static void helpScreen();								//Màn hình hướng dẫn
 	static int exitScreen();								//Màn hình thoát
@@ -21,5 +22,8 @@ struct Menu
 	static void printDoubleRectangle(int, int, int, int);	//In hình chữ nhật cạnh 2 nét
 	static void printAnimation();							//In hiệu ứng mở đầu
 	static void printPikachu();								//In pikachu
-	static void winScreen();
+	static void drawFaceLeftPikachu();
+	static void drawFaceRightPikachu();
+	static void winScreen(Account);
+	static int saveScreen();
 };

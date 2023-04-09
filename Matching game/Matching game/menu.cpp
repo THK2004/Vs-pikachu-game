@@ -1,17 +1,20 @@
 ﻿#include "menu.h"
 
 
-int Menu::mainMenu() {
+int Menu::mainMenu(Account account) {
     Console::playSound(MENU_SOUND);
     Console::setColor(WHITE, BLACK);
 
+    drawFaceRightPikachu();
+    drawFaceLeftPikachu();
     printLogo();
+    LoginScreen::printAccountName(account);
 
-    printDoubleRectangle(59, 13, 15, 13);
-    printRectangle(60, 14, 13, 2);
-    printRectangle(60, 17, 13, 2);
-    printRectangle(60, 20, 13, 2);
-    printRectangle(60, 23, 13, 2);
+    printDoubleRectangle(64, 13, 15, 13);
+    printRectangle(65, 14, 13, 2);
+    printRectangle(65, 17, 13, 2);
+    printRectangle(65, 20, 13, 2);
+    printRectangle(65, 23, 13, 2);
 
     int choice[4] = { 0,0,0,0 };
     int key = 0;
@@ -22,44 +25,44 @@ int Menu::mainMenu() {
         choice[curChoice] = 1;
 
         if (choice[0]) {
-            Console::gotoXY(62, 15);
+            Console::gotoXY(67, 15);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " NEW GAME ";
         }
         else {
-            Console::gotoXY(62, 15);
+            Console::gotoXY(67, 15);
             Console::setColor(WHITE, BLACK);
             std::cout << " NEW GAME ";
         }
         if (choice[1]) {
-            Console::gotoXY(62, 18);
+            Console::gotoXY(67, 18);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " CONTINUE ";
         }
         else {
-            Console::gotoXY(62, 18);
+            Console::gotoXY(67, 18);
             Console::setColor(WHITE, BLACK);
             std::cout << " CONTINUE ";
         }
 
         if (choice[2]) {
-            Console::gotoXY(61, 21);
+            Console::gotoXY(66, 21);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " LEADERBOARD ";
         }
         else {
-            Console::gotoXY(61, 21);
+            Console::gotoXY(66, 21);
             Console::setColor(WHITE, BLACK);
             std::cout << " LEADERBOARD ";
         }
 
         if (choice[3]) {
-            Console::gotoXY(64, 24);
+            Console::gotoXY(69, 24);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " EXIT ";
         }
         else {
-            Console::gotoXY(64, 24);
+            Console::gotoXY(69, 24);
             Console::setColor(WHITE, BLACK);
             std::cout << " EXIT ";
         }
@@ -91,12 +94,15 @@ int Menu::mainMenu() {
                 EXIT = exitScreen();
                 if (EXIT == 0) {
                     printLogo();
+                    drawFaceRightPikachu();
+                    drawFaceLeftPikachu();
+                    LoginScreen::printAccountName(account);
 
-                    printDoubleRectangle(59, 13, 15, 13);
-                    printRectangle(60, 14, 13, 2);
-                    printRectangle(60, 17, 13, 2);
-                    printRectangle(60, 20, 13, 2);
-                    printRectangle(60, 23, 13, 2);
+                    printDoubleRectangle(64, 13, 15, 13);
+                    printRectangle(65, 14, 13, 2);
+                    printRectangle(65, 17, 13, 2);
+                    printRectangle(65, 20, 13, 2);
+                    printRectangle(65, 23, 13, 2);
 
                     flag = 0;
                     break;
@@ -114,17 +120,20 @@ int Menu::mainMenu() {
     }
 }
 
-int Menu::modeSelectMenu() {
+int Menu::modeSelectMenu(Account account) {
     Console::playSound(MENU_SOUND);
     Console::setColor(WHITE, BLACK);
 
+    drawFaceRightPikachu();
+    drawFaceLeftPikachu();
     printLogo();
+    LoginScreen::printAccountName(account);
 
-    printDoubleRectangle(59, 13, 15, 13);
-    printRectangle(62, 14, 10, 2);
-    printRectangle(62, 17, 10, 2);
-    printRectangle(62, 20, 10, 2);
-    printRectangle(62, 23, 10, 2);
+    printDoubleRectangle(64, 13, 15, 13);
+    printRectangle(67, 14, 10, 2);
+    printRectangle(67, 17, 10, 2);
+    printRectangle(67, 20, 10, 2);
+    printRectangle(67, 23, 10, 2);
 
     int choice[4] = { 0,0,0,0 };
     int key = 0;
@@ -136,44 +145,44 @@ int Menu::modeSelectMenu() {
         choice[curChoice] = 1;
 
         if (choice[0]) {
-            Console::gotoXY(64, 15);
+            Console::gotoXY(69, 15);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " NORMAL ";
         }
         else {
-            Console::gotoXY(64, 15);
+            Console::gotoXY(69, 15);
             Console::setColor(WHITE, BLACK);
             std::cout << " NORMAL ";
         }
         if (choice[1]) {
-            Console::gotoXY(65, 18);
+            Console::gotoXY(70, 18);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " HARD ";
         }
         else {
-            Console::gotoXY(65, 18);
+            Console::gotoXY(70, 18);
             Console::setColor(WHITE, BLACK);
             std::cout << " HARD ";
         }
 
         if (choice[2]) {
-            Console::gotoXY(65, 21);
+            Console::gotoXY(70, 21);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " HELP ";
         }
         else {
-            Console::gotoXY(65, 21);
+            Console::gotoXY(70, 21);
             Console::setColor(WHITE, BLACK);
             std::cout << " HELP ";
         }
 
         if (choice[3]) {
-            Console::gotoXY(65, 24);
+            Console::gotoXY(70, 24);
             Console::setColor(LIGHT_RED, BLACK);
             std::cout << " BACK ";
         }
         else {
-            Console::gotoXY(65, 24);
+            Console::gotoXY(70, 24);
             Console::setColor(WHITE, BLACK);
             std::cout << " BACK ";
         }
@@ -206,12 +215,15 @@ int Menu::modeSelectMenu() {
                 EXIT = exitScreen();
                 if (EXIT == 0) {
                     printLogo();
+                    drawFaceRightPikachu();
+                    drawFaceLeftPikachu();
+                    LoginScreen::printAccountName(account);
 
-                    printDoubleRectangle(59, 13, 15, 13);
-                    printRectangle(60, 14, 13, 2);
-                    printRectangle(60, 17, 13, 2);
-                    printRectangle(60, 20, 13, 2);
-                    printRectangle(60, 23, 13, 2);
+                    printDoubleRectangle(64, 13, 15, 13);
+                    printRectangle(65, 14, 13, 2);
+                    printRectangle(65, 17, 13, 2);
+                    printRectangle(65, 20, 13, 2);
+                    printRectangle(65, 23, 13, 2);
 
                     flag = 0;
                     break;
@@ -335,18 +347,18 @@ void Menu::printAnimation()
 }
 
 void Menu::printLogo() {
-    Console::gotoXY(35, 2);
-    std::cout << " ______    __   __  ___      ___       ______  __    __   __    __";
-    Console::gotoXY(35, 3);
-    std::cout << "|   _  \\  |  | |  |/  /     /   \\     /      ||  |  |  | |  |  |  |";
-    Console::gotoXY(35, 4);
-    std::cout << "|  |_)  | |  | |  '  /     /  ^  \\   |  ,----'|  |__|  | |  |  |  |";
-    Console::gotoXY(35, 5);
-    std::cout << "|   ___/  |  | |    <     /  /_\\  \\  |  |     |   __   | |  |  |  |";
-    Console::gotoXY(35, 6);
-    std::cout << "|  |      |  | |  .  \\   /  _____  \\ |  `----.|  |  |  | |  `--'  |";
-    Console::gotoXY(35, 7);
-    std::cout << "|__|      |__| |__|\\__\\ /__/     \\__\\ \\______||__|  |__|  \\______/";
+    Console::gotoXY(0, 1);
+    cout << R"(
+                                       _______   __     __   ___       __       ______    __    __   ____  ____  
+                                      |   __ "\ |" \   |/"| /  ")     /""\     /" _  "\  /" |  | "\ ("  _||_ " | 
+                                      (. |__) :)||  |  (: |/   /     /    \   (: ( \___)(:  (__)  :)|   (  ) : | 
+                                      |:  ____/ |:  |  |    __/     /' /\  \   \/ \      \/      \/ (:  |  | . ) 
+                                      (|  /     |.  |  (// _  \    //  __'  \  //  \ _   //  __  \\  \\ \__/ //  
+                                     /|__/ \    /\  |\ |: | \  \  /   /  \\  \(:   _) \ (:  (  )  :) /\\ __ //\  
+                                    (_______)  (__\_|_)(__|  \__)(___/    \___)\_______) \__|  |__/ (__________) 
+                                                                             
+                                                                             
+    )";
 }
 
 void Menu::printPikachu() {
@@ -392,6 +404,7 @@ void Menu::printPikachu() {
 
 int Menu::exitScreen() {
     printLogo();
+
     Console::setColor(WHITE, BLACK);
     printDoubleRectangle(59, 14, 20, 2);
     printRectangle(62, 17, 4, 2);
@@ -459,31 +472,227 @@ int Menu::exitScreen() {
     }
 }
 
-void Menu::leaderBoard() {
+int Menu::saveScreen() {
+    printLogo();
+    drawFaceRightPikachu();
+    drawFaceLeftPikachu();
+
     Console::setColor(WHITE, BLACK);
-    std::cout << R"(
-	                       _      ______          _____  ______ _____  ____   ____          _____  _____  
-	                      | |    |  ____|   /\   |  __ \|  ____|  __ \|  _ \ / __ \   /\   |  __ \|  __ \ 
-	                      | |    | |__     /  \  | |  | | |__  | |__) | |_) | |  | | /  \  | |__) | |  | |
-	                      | |    |  __|   / /\ \ | |  | |  __| |  _  /|  _ <| |  | |/ /\ \ |  _  /| |  | |
-	                      | |____| |____ / ____ \| |__| | |____| | \ \| |_) | |__| / ____ \| | \ \| |__| |
-	                      |______|______/_/    \_\_____/|______|_|  \_\____/ \____/_/    \_\_|  \_\_____/                                                                 
-	)";
-    
-    
-    Console::gotoXY(5, 11);
-    std::cout << "_________________________________________________________________________________________________________________________________________";
-    
-    for (int j = 0; j < 126; j += 25) {
-        for (int i = 0; i < 22; i++) {
-            Console::gotoXY(j + 10, i + 9);
-            std::cout << "|";
+    printDoubleRectangle(59, 14, 29, 2);
+    printRectangle(51, 17, 15, 2);
+    printRectangle(70, 17, 5, 2);
+    printRectangle(80, 17, 16, 2);
+
+    Console::gotoXY(60, 15);
+    std::cout << "Do you want to save and quit?";
+
+    int choice[3] = { 0,0,0 };
+    int key = 0;
+    int curChoice = 0;
+
+    while (true) {
+        choice[curChoice] = 1;
+
+        if (choice[0]) {
+            Console::gotoXY(52, 18);
+            Console::setColor(LIGHT_RED, BLACK);
+            std::cout << " NO, come back ";
+        }
+        else {
+            Console::gotoXY(52, 18);
+            Console::setColor(WHITE, BLACK);
+            std::cout << " NO, come back ";
+        }
+        if (choice[1]) {
+            Console::gotoXY(71, 18);
+            Console::setColor(LIGHT_RED, BLACK);
+            std::cout << " YES ";
+        }
+        else {
+            Console::gotoXY(71, 18);
+            Console::setColor(WHITE, BLACK);
+            std::cout << " YES ";
+        }
+        if (choice[2]) {
+            Console::gotoXY(81, 18);
+            Console::setColor(LIGHT_RED, BLACK);
+            std::cout << " Nah, just quit ";
+        }
+        else {
+            Console::gotoXY(81, 18);
+            Console::setColor(WHITE, BLACK);
+            std::cout << " Nah, just quit ";
+        }
+        Console::setColor(WHITE, BLACK);
+
+        while (true) {
+            int flag = 0;
+
+            key = _getch();
+            switch (key) {
+            case KEY_ENTER:
+                std::system("cls");
+                return curChoice;
+            case KEY_RIGHT:
+                Console::playSound(MENU_SOUND);
+                choice[curChoice] = 0;
+                if (curChoice < 2) curChoice++;
+                else curChoice = 0;
+                break;
+            case KEY_LEFT:
+                Console::playSound(MENU_SOUND);
+                choice[curChoice] = 0;
+                if (curChoice > 0) curChoice--;
+                else curChoice = 2;
+                break;
+            default:
+                flag = 1;
+                break;
+            }
+
+            if (flag == 0)
+                break;
         }
     }
+}
 
-    printRectangle(54,32,40,2);
-    Console::gotoXY(55, 33);
-    std::cout << "PRESS ANY BUTTON TO RETURN TO MAIN MENU!";
+void Menu::leaderBoard() {
+    //vẽ console
+    Console::setColor(WHITE, LIGHT_RED);
+    cout << R"(
+                                    .__                     .___          ___.                          .___
+                                    |  |   ____ _____     __| _/__________\_ |__   _________ _______  __| _/
+                                    |  | _/ __ \\__  \   / __ |/ __ \_  __ \ __ \ /  _ \__  \\_  __ \/ __ | 
+                                    |  |_\  ___/ / __ \_/ /_/ \  ___/|  | \/ \_\ (  <_> ) __ \|  | \/ /_/ | 
+                                    |____/\___  >____  /\____ |\___  >__|  |___  /\____(____  /__|  \____ | 
+                                              \/     \/      \/    \/          \/           \/           \/ 
+                                            
+	)";
+    Console::setColor(WHITE, BLACK);
+    printRectangle(5, 8, 135, 21);
+
+    for (int i = 6; i < 141; i++)
+    {
+        Console::gotoXY(i, 10);
+        putchar(196);
+    }
+
+    Console::setColor(WHITE, BLUE);
+
+    Console::gotoXY(8, 9);
+    cout << "STT";
+
+    Console::gotoXY(36, 9);
+    cout << "Name";
+
+    Console::gotoXY(77, 9);
+    cout << "Mode";
+
+    Console::gotoXY(104, 9);
+    cout << "Score";
+
+    Console::gotoXY(128, 9);
+    cout << "Time";
+
+    Console::setColor(WHITE, BLACK);
+
+    for (int i = 1; i < 21; i++)
+    {
+        Console::gotoXY(13, 8 + i);
+        putchar(179);
+    }
+    for (int i = 1; i < 21; i++)
+    {
+        Console::gotoXY(63, 8 + i);
+        putchar(179);
+    }
+
+    for (int i = 1; i < 21; i++)
+    {
+        Console::gotoXY(94, 8 + i);
+        putchar(179);
+    }
+    for (int i = 1; i < 21; i++)
+    {
+        Console::gotoXY(118, 8 + i);
+        putchar(179);
+    }
+
+    Account listAccountRecord[50];
+    int count = 0;
+    string s, token;
+
+    //Đọc ghi lên leaderBoard
+    ifstream ifs("Leaderboard\\leaderboard.txt");
+
+    if (!ifs.is_open()) {
+        exit(1);
+    }
+
+    while (!ifs.eof()) {
+        getline(ifs, s);                                //s = "Num/Username/mode/score/time"
+        if (s == "")
+            break;
+
+        stringstream ss(s);                             //ss = "Num/Username/mode/score/time"
+
+        getline(ss, token, '/');                        //token = Num
+        listAccountRecord[count].Num = stoi(token);
+        getline(ss, token, '/');                        //token = Username
+        listAccountRecord[count].UserName = token;
+        getline(ss, token, '/');                        //token = mode
+        listAccountRecord[count].mode = stoi(token);
+        getline(ss, token, '/');                        //token = score
+        listAccountRecord[count].score = stoi(token);
+        getline(ss, token);                             //token = time
+        listAccountRecord[count].time = stoi(token);
+
+        count++;
+    }
+
+    //Sort giảm dần theo điểm số
+    for (int i = 0; i < count - 1; i++)
+        for (int j = i + 1; j < count; j++)
+            if (listAccountRecord[i].score < listAccountRecord[j].score)
+                swap(listAccountRecord[i], listAccountRecord[j]);
+
+    //Sort tăng dần theo thời gian
+    for (int i = 0; i < count - 1; i++)
+        for (int j = i + 1; j < count; j++)
+            if (listAccountRecord[i].time > listAccountRecord[j].time && listAccountRecord[i].score == listAccountRecord[j].score)
+                swap(listAccountRecord[i], listAccountRecord[j]);
+
+    //display 5 best record
+    for (int i = 0; i < 5; i++) {
+        //Cột stt
+        Console::gotoXY(9, 11 + i );
+        cout << i+1;
+
+        //Cột name
+        Console::gotoXY(33, 11 + i);
+        cout << listAccountRecord[i].UserName;
+
+        //Cột mode
+        Console::gotoXY(75, 11 + i);
+        if (listAccountRecord[i].mode)
+            cout << "HARD";
+        else
+            cout << "NORMAL";
+
+        //Cột score
+        Console::gotoXY(106, 11 + i);
+        cout << listAccountRecord[i].score;
+
+        //Cột time
+        Console::gotoXY(128, 11 + i);
+        cout << listAccountRecord[i].time << "s";
+    }
+
+    ifs.close();
+
+    printRectangle(50, 32, 40, 2);
+    Console::gotoXY(51, 33);
+    cout << "PRESS ANY BUTTON TO RETURN TO MAIN MENU!";
 
     int key = _getch();
     system("cls");
@@ -492,7 +701,6 @@ void Menu::leaderBoard() {
 
 void Menu::helpScreen() {
     Console::setColor(WHITE, BLACK);
-    Console::clearConsole();
 
     int left = 10, top = 2, width = 125, height = 28;
     int line1 = 6, line2 = 19;
@@ -542,7 +750,9 @@ void Menu::helpScreen() {
     Console::gotoXY(left + 52, top + 5);
     putchar(249);
     cout << "I: for more infomation.";
-
+    Console::gotoXY(left + 83, top + 5);
+    putchar(249);
+    cout << "ESC: to save and  exit the program.";
 
 
     Console::gotoXY(left + 3, top + 10);
@@ -617,7 +827,7 @@ void Menu::helpScreen() {
     return;
 }
 
-void Menu::winScreen() {
+void Menu::winScreen(Account account) {
     srand((unsigned int)time(NULL));
     //Console::playSound(WIN_SOUND);
     Console::setColor(WHITE, GREEN);
@@ -635,17 +845,17 @@ void Menu::winScreen() {
     cout << "BRAVO !!! YOU FINISHED THE GAME";
 
     Console::gotoXY(59, 10);
-    cout << "YOUR SCORE: " << 48;
+    cout << "YOUR SCORE: " << account.score << ".";
     Console::gotoXY(59, 11);
-    cout << "YOUR TIME: " << 48;
-
-    Console::gotoXY(30, 18);
+    cout << "YOUR TIME: " << account.time << "s.";
+    Console::gotoXY(47, 12);
+    cout << "GO TO LEADER BOARD TO SEE IF YOUR NAME HERE!!!";
 
     int loop = 30;
     while (loop--) {
+        Console::setColor(WHITE, RED);
+        drawFaceRightPikachu();
         Console::setColor(WHITE, rand() % 7);
-
-
         Console::gotoXY(30, 18);
         cout << R"(
                                                                                       .''.       
@@ -659,10 +869,17 @@ void Menu::winScreen() {
                                                                        *
                                                           *
 		)";
-
-        Console::gotoXY(5, 13);
         Console::setColor(WHITE, RED);
-        cout << R"(
+        drawFaceLeftPikachu();
+        Sleep(200);
+    }
+    Console::setColor(WHITE, BLACK);
+    std::system("cls");
+}
+
+void Menu::drawFaceLeftPikachu() {
+    Console::gotoXY(5, 13);
+    cout << R"(
 	
          `;-.          ___,
            `.`\_...._/`.-"`
@@ -678,10 +895,24 @@ void Menu::winScreen() {
              (_,-'`> .'
                   (_,'
 		)";
+}
 
-        Menu::printPikachu();
-        Sleep(200);
-    }
-    Console::setColor(WHITE, BLACK);
-    std::system("cls");
+void Menu::drawFaceRightPikachu() {
+    Console::gotoXY(60, 13);
+    cout << R"(
+
+                                                                                                                           ,___          .-;'
+                                                                                                                           `"-.`\_...._/`.`
+                                                                                                                        ,      \        /
+                                                                                                                     .-' ',    / ()   ()\
+                                                                                                                    `'._   \  /()    .  (|
+                                                                                                                        > .' ;,     -'-  /
+                                                                                                                       / <   |;,     __.;
+                                                                                                                       '-.'-.|  , \    , \
+                                                                                                                          `>.|;, \_)    \_)
+                                                                                                                           `-;     ,    /
+                                                                                                                              \    /   <
+                                                                                                                               '. <`'-,_)
+                                                                                                                                '._)
+		)";
 }

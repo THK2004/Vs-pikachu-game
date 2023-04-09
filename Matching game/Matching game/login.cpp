@@ -1,6 +1,6 @@
 ﻿#include "login.h"
 
-void LoginScreen::loginScreen() {
+void LoginScreen::loginScreen(Account& account) {
 	int choice[3] = { 0,0,0 };
 	int key = 0;
 	int curChoice = 0;
@@ -8,11 +8,11 @@ void LoginScreen::loginScreen() {
 	bool isLogin = 0;
 
 	while (true) {
-		Menu::printLogo();
+		printLogo();
 
-		Menu::printRectangle(42, 20, 15, 2);
-		Menu::printRectangle(62, 20, 15, 2);
-		Menu::printRectangle(82, 20, 21, 2);
+		printRectangle(42, 20, 15, 2);
+		printRectangle(62, 20, 15, 2);
+		printRectangle(82, 20, 21, 2);
 
 
 		choice[curChoice] = 1;
@@ -56,25 +56,16 @@ void LoginScreen::loginScreen() {
 			key = _getch();
 
 			switch (key) {
-
-			case KEY_ESC:
-				std::system("cls");
-				EXIT = Menu::exitScreen();
-				if (EXIT == 0) {
-					flag = 0;
-					break;
-				}
-				else
-					exit(0);
-
 			case KEY_ENTER:
 				std::system("cls");
-				Menu::printLogo();
+				printLogo();
 
 				if (curChoice == 0) {
-					isLogin = doLogin();
-					if (isLogin)
+					isLogin = doLogin(account);
+					if (isLogin) {
+						printAccountName(account);
 						return;
+					}
 					else
 						break;
 				}
@@ -83,6 +74,9 @@ void LoginScreen::loginScreen() {
 					break;
 				}
 				else {
+					account.UserName = "Guest account";
+					account.Num = 0;
+					printAccountName(account);
 					return;
 				}
 
@@ -112,9 +106,7 @@ void LoginScreen::loginScreen() {
 	}
 }
 
-
-bool LoginScreen::doLogin() {
-	Account login;
+bool LoginScreen::doLogin(Account& login) {
 	string line = "";
 
 	while (true) { 
@@ -163,8 +155,10 @@ bool LoginScreen::doLogin() {
 				line.clear();
 				string token = "";
 
-				std::getline(ifs, line);	//line = "username/password"
+				std::getline(ifs, line);	//line = "1/username/password"
 				stringstream ss(line);
+				getline(ss, token, '/');	//token = 1
+				login.Num = std::stoi(token);
 
 				getline(ss, token, '/');	//token = "username"
 				if (token == login.UserName)
@@ -222,7 +216,6 @@ bool LoginScreen::doLogin() {
 	}
 }
 
-
 void LoginScreen::doSignup() {
 	// If user choose SIGN UP
 
@@ -230,10 +223,13 @@ void LoginScreen::doSignup() {
 	string re_Password;
 	while (true) {	//Đăng ký tài khoản
 		bool true_while_flag = 0;
+		int accountNumber = 0;
 
 		Console::setColor(WHITE, BLACK);
-		Console::gotoXY(25, 18);
+		Console::gotoXY(25, 17);
 		std::cout << "Please enter all information bellow, under 15 characters !";
+		Console::gotoXY(25, 18);
+		std::cout << "Your username will be used as your account name.";
 
 		Console::setColor(WHITE, BLACK);
 		Console::gotoXY(30, 20);
@@ -257,6 +253,53 @@ void LoginScreen::doSignup() {
 
 			p.UserName.clear();
 			true_while_flag = 1;
+		}
+		else if (p.UserName == "") {
+			for (int i = 0; i < p.UserName.size(); i++) {
+				Console::gotoXY(48 + i, 20);
+				std::cout << " ";
+			}
+
+			Console::gotoXY(32, 26);
+			Console::setColor(WHITE, RED);
+			std::cout << "Enter your username";
+			Console::setColor(WHITE, BLACK);
+
+			p.UserName.clear();
+			true_while_flag = 1;
+		}
+
+		if (true_while_flag == 0) {
+			ifstream ifs("Account\\account.txt");
+			string temp, token;
+			bool checkUsername = 0;
+
+			while (!ifs.eof()) {
+				getline(ifs, temp);			//temp = 1/username/password
+				stringstream ss(temp);		//ss = 1/username/password
+				getline(ss, token, '/');	//token = 1
+				getline(ss, token, '/');	//token = username
+				if (token == p.UserName)
+					checkUsername = 1;
+				getline(ss, token, '/');	//token = password
+				accountNumber++;
+			}
+			ifs.close();
+
+			if (checkUsername == 1) {
+				for (int i = 0; i < p.UserName.size(); i++) {
+					Console::gotoXY(48 + i, 20);
+					std::cout << " ";
+				}
+
+				Console::gotoXY(32, 26);
+				Console::setColor(WHITE, RED);
+				std::cout << "Username existed!!!";
+				Console::setColor(WHITE, BLACK);
+
+				p.UserName.clear();
+				true_while_flag = 1;
+			}
 		}
 
 		if (true_while_flag == 0) {
@@ -347,6 +390,7 @@ void LoginScreen::doSignup() {
 				}
 				else {
 					ofstream ofs("Account\\account.txt", ios::app);
+					ofs << accountNumber << "/";
 					ofs << p.UserName << "/";
 					ofs << p.Password;
 					ofs << endl;
@@ -369,4 +413,71 @@ void LoginScreen::doSignup() {
 	std::system("cls");
 
 	return;
+}
+
+void LoginScreen::printAccountName(Account account) {
+	Console::gotoXY(0, 0);
+	std::cout << "Account: " << account.UserName;
+}
+
+
+void printLogo() {
+	Console::gotoXY(0, 1);
+	cout << R"(
+                                       _______   __     __   ___       __       ______    __    __   ____  ____  
+                                      |   __ "\ |" \   |/"| /  ")     /""\     /" _  "\  /" |  | "\ ("  _||_ " | 
+                                      (. |__) :)||  |  (: |/   /     /    \   (: ( \___)(:  (__)  :)|   (  ) : | 
+                                      |:  ____/ |:  |  |    __/     /' /\  \   \/ \      \/      \/ (:  |  | . ) 
+                                      (|  /     |.  |  (// _  \    //  __'  \  //  \ _   //  __  \\  \\ \__/ //  
+                                     /|__/ \    /\  |\ |: | \  \  /   /  \\  \(:   _) \ (:  (  )  :) /\\ __ //\  
+                                    (_______)  (__\_|_)(__|  \__)(___/    \___)\_______) \__|  |__/ (__________) 
+                                                                             
+                                                                             
+    )";
+}
+
+void printDoubleRectangle(int left, int top, int width, int height) {
+	Console::gotoXY(left, top);
+	putchar(201);
+	for (int i = 0; i < width; i++)
+		putchar(205);
+	putchar(187);
+
+	int i = 0;
+	for (; i < height; i++)
+	{
+		Console::gotoXY(left, top + i + 1);
+		putchar(186);
+		Console::gotoXY(left + width + 1, top + i + 1);
+		putchar(186);
+	}
+
+	Console::gotoXY(left, top + i);
+	putchar(200);
+	for (i = 0; i < width; i++)
+		putchar(205);
+	putchar(188);
+}
+
+void printRectangle(int left, int top, int width, int height) {
+	Console::gotoXY(left, top);
+	putchar(218);
+	for (int i = 0; i < width; i++)
+		putchar(196);
+	putchar(191);
+
+	int i = 0;
+	for (; i < height; i++)
+	{
+		Console::gotoXY(left, top + i + 1);
+		putchar(179);
+		Console::gotoXY(left + width + 1, top + i + 1);
+		putchar(179);
+	}
+
+	Console::gotoXY(left, top + i);
+	putchar(192);
+	for (i = 0; i < width; i++)
+		putchar(196);
+	putchar(217);
 }

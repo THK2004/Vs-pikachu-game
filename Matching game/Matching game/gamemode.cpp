@@ -1,6 +1,10 @@
 ﻿#include "gamemode.h"
 
-void GameMode::createNormalGame() {
+void GameMode::createNormalGame(Account& account) {
+	clock_t start, end;
+	double playTime = 0;
+	start = clock();
+
 	Board board(TOP, LEFT, HEIGHT, WIDTH);
 	GamePlay gameplay;
 	gameplay.score = 0;
@@ -14,8 +18,13 @@ void GameMode::createNormalGame() {
 	int key = 0;
 	int EXIT = 0;
 
+	char** background;
+	getBackground(background, HEIGHT, WIDTH);
+
 	while (isPlaying) {
+		displayBackground(background, TOP, LEFT, HEIGHT);			//Vẽ background
 		board.drawBoard(HEIGHT, WIDTH, board.pBoard);				//Vẽ board hiện tại
+		LoginScreen::printAccountName(account);
 
 		if (gameplay.score < 0)
 			gameplay.score = 0;
@@ -94,11 +103,16 @@ void GameMode::createNormalGame() {
 
 				switch (key) {
 				case KEY_ESC:
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
 					Console::playSound(MENU_SOUND);
 					std::system("cls");
 					EXIT = Menu::exitScreen();
 					if (EXIT == 0) {
 						true_while_flag = 0;
+
+						start = clock();
 						break;
 					}
 					else
@@ -439,10 +453,32 @@ void GameMode::createNormalGame() {
 					Sleep(500);
 					break;
 				case 'I':
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+					Console::clearConsole();
+					Console::setColor(WHITE, BLUE);
+					Console::gotoXY(57, 0);
+					std::cout << "Play time up to now: " << playTime << "s...";
+					Console::setColor(WHITE, BLACK);
+
 					Menu::helpScreen();
+
+					start = clock();
 					break;
 				case 'i':
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+					Console::clearConsole();
+					Console::setColor(WHITE, BLUE);
+					Console::gotoXY(57, 0);
+					std::cout << "Play time up to now: " << playTime << "s...";
+					Console::setColor(WHITE, BLACK);
+
 					Menu::helpScreen();
+
+					start = clock();
 					break;
 				default:
 					true_while_flag = 1;
@@ -452,10 +488,21 @@ void GameMode::createNormalGame() {
 					break;
 			}
 		}
+		else {
+			Sleep(500);
+		}
 
 		if (gameplay.validPair == 0 && gameplay.remainingCell == 0) {
+			end = clock();
+			playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+			account.time = int(playTime);
+			account.isFinished = 1;
+			account.score = gameplay.score;
+			account.mode = 0;
+
 			std::system("cls");
-			Menu::winScreen();
+			Menu::winScreen(account);
 			isPlaying = 0;
 		}
 		else if (gameplay.validPair == 0 && gameplay.remainingCell != 0) {
@@ -468,11 +515,25 @@ void GameMode::createNormalGame() {
 		}
 	}
 
-	board.deleteBoard(HEIGHT, WIDTH, board.pBoard);
+	//Num/name/mode/score/time
+	ofstream ofs("LeaderBoard\\leaderboard.txt", ios::app);
+	ofs << account.Num << "/";
+	ofs << account.UserName << "/";
+	ofs << account.mode << "/";
+	ofs << account.score << "/";
+	ofs << account.time;
+	ofs << std::endl;
+	ofs.close();
+
+	deleteBackground(background, HEIGHT);
 	board.clearBoard(board.pBoard);
 }
 
-void GameMode::createHardGame_2DPointerArray() {
+void GameMode::createHardGame_2DPointerArray(Account& account) {
+	clock_t start, end;
+	double playTime = 0;
+	start = clock();
+
 	Board board(H_TOP, H_LEFT, H_HEIGHT, H_WIDTH);
 	GamePlay gameplay;
 	gameplay.score = 0;
@@ -486,8 +547,13 @@ void GameMode::createHardGame_2DPointerArray() {
 	int key = 0;
 	int EXIT = 0;
 
+	char** background;
+	getBackground(background, H_HEIGHT, H_WIDTH);
+
 	while (isPlaying) {
+		displayBackground(background, H_TOP, H_LEFT, H_HEIGHT);			//Vẽ background
 		board.drawBoard(H_HEIGHT, H_WIDTH, board.pBoard);
+		LoginScreen::printAccountName(account);
 
 		if (gameplay.score < 0)
 			gameplay.score = 0;
@@ -568,11 +634,16 @@ void GameMode::createHardGame_2DPointerArray() {
 
 				switch (key) {
 				case KEY_ESC:
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
 					Console::playSound(MENU_SOUND);
 					std::system("cls");
 					EXIT = Menu::exitScreen();
 					if (EXIT == 0) {
 						true_while_flag = 0;
+
+						start = clock();
 						break;
 					}
 					else
@@ -945,10 +1016,32 @@ void GameMode::createHardGame_2DPointerArray() {
 					Sleep(500);
 					break;
 				case 'I':
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+					Console::clearConsole();
+					Console::setColor(WHITE, BLUE);
+					Console::gotoXY(57, 0);
+					std::cout << "Play time up to now: " << playTime << "s...";
+					Console::setColor(WHITE, BLACK);
+
 					Menu::helpScreen();
+
+					start = clock();
 					break;
 				case 'i':
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+					Console::clearConsole();
+					Console::setColor(WHITE, BLUE);
+					Console::gotoXY(57, 0);
+					std::cout << "Play time up to now: " << playTime << "s...";
+					Console::setColor(WHITE, BLACK);
+
 					Menu::helpScreen();
+
+					start = clock();
 					break;
 				default:
 					true_while_flag = 1;
@@ -958,10 +1051,21 @@ void GameMode::createHardGame_2DPointerArray() {
 					break;
 			}
 		}
+		else {
+			Sleep(500);
+		}
 
 		if (gameplay.validPair == 0 && gameplay.remainingCell == 0) {
+			end = clock();
+			playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+			account.time = int(playTime);
+			account.isFinished = 1;
+			account.score = gameplay.score;
+			account.mode = 1;
+
 			std::system("cls");
-			Menu::winScreen();
+			Menu::winScreen(account);
 			isPlaying = 0;
 		}
 		else if (gameplay.validPair == 0 && gameplay.remainingCell != 0) {
@@ -973,10 +1077,26 @@ void GameMode::createHardGame_2DPointerArray() {
 			board.shuffle(HEIGHT, WIDTH, board.pBoard);
 		}
 	}
+
+	//Num/name/mode/score/time
+	ofstream ofs("LeaderBoard\\leaderboard.txt", ios::app);
+	ofs << account.Num << "/";
+	ofs << account.UserName << "/";
+	ofs << account.mode << "/";
+	ofs << account.score << "/";
+	ofs << account.time;
+	ofs << std::endl;
+	ofs.close();
+
+	deleteBackground(background, H_HEIGHT);
 	board.clearBoard(board.pBoard);
 }
 
-void GameMode::createHardGame_LinkedList() {
+void GameMode::createHardGame_LinkedList(Account& account) {
+	clock_t start, end;
+	double playTime = 0;
+	start = clock();
+
 	Board board(H_TOP, H_LEFT, H_HEIGHT, H_WIDTH);
 	GamePlay gameplay;
 	gameplay.score = 0;
@@ -990,6 +1110,9 @@ void GameMode::createHardGame_LinkedList() {
 	int key = 0;
 	int EXIT = 0;
 
+	char** background;
+	getBackground(background, H_HEIGHT, H_WIDTH);
+
 	//Tạo linked list
 	Node* head = createNode(board.pBoard[0][0].pokemon, board.pBoard[0][0].x, board.pBoard[0][0].y);
 	for (int i = 1; i < HEIGHT * WIDTH; i++) {
@@ -1001,7 +1124,9 @@ void GameMode::createHardGame_LinkedList() {
 	int len = 0;
 
 	while (isPlaying) {
+		displayBackground(background, H_TOP, H_LEFT, H_HEIGHT);			//Vẽ background
 		board.drawBoard(H_HEIGHT, H_WIDTH, board.pBoard);	//Vẽ board hiện tại
+		LoginScreen::printAccountName(account);
 
 		if (gameplay.score < 0)
 			gameplay.score = 0;
@@ -1082,11 +1207,16 @@ void GameMode::createHardGame_LinkedList() {
 
 				switch (key) {
 				case KEY_ESC:
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
 					Console::playSound(MENU_SOUND);
 					std::system("cls");
 					EXIT = Menu::exitScreen();
 					if (EXIT == 0) {
 						true_while_flag = 0;
+
+						start = clock();
 						break;
 					}
 					else
@@ -1502,10 +1632,32 @@ void GameMode::createHardGame_LinkedList() {
 					Sleep(500);
 					break;
 				case 'I':
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+					Console::clearConsole();
+					Console::setColor(WHITE, BLUE);
+					Console::gotoXY(57, 0);
+					std::cout << "Play time up to now: " << playTime << "s...";
+					Console::setColor(WHITE, BLACK);
+
 					Menu::helpScreen();
+
+					start = clock();
 					break;
 				case 'i':
+					end = clock();
+					playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+					Console::clearConsole();
+					Console::setColor(WHITE, BLUE);
+					Console::gotoXY(57, 0);
+					std::cout << "Play time up to now: " << playTime << "s...";
+					Console::setColor(WHITE, BLACK);
+
 					Menu::helpScreen();
+
+					start = clock();
 					break;
 				default:
 					true_while_flag = 1;
@@ -1515,10 +1667,21 @@ void GameMode::createHardGame_LinkedList() {
 					break;
 			}
 		}
+		else {
+			Sleep(500);
+		}
 
 		if (gameplay.validPair == 0 && gameplay.remainingCell == 0) {
+			end = clock();
+			playTime += (double)(end - start) / CLOCKS_PER_SEC;
+
+			account.time = int(playTime);
+			account.isFinished = 1;
+			account.score = gameplay.score;
+			account.mode = 1;
+
 			std::system("cls");
-			Menu::winScreen();
+			Menu::winScreen(account);
 			isPlaying = 0;
 		}
 		else if (gameplay.validPair == 0 && gameplay.remainingCell != 0) {
@@ -1539,6 +1702,17 @@ void GameMode::createHardGame_LinkedList() {
 		}
 	}
 
+	//Num/name/mode/score/time
+	ofstream ofs("LeaderBoard\\leaderboard.txt", ios::app);
+	ofs << account.Num << "/";
+	ofs << account.UserName << "/";
+	ofs << account.mode << "/";
+	ofs << account.score << "/";
+	ofs << account.time;
+	ofs << std::endl;
+	ofs.close();
+
+	deleteBackground(background, H_HEIGHT);
 	deleteLinkedList(head);
 	board.clearBoard(board.pBoard);
 }
@@ -1564,4 +1738,50 @@ void moveSuggestion(int height, int width, Cell** pBoard) {
 			}
 		}
 	}
+}
+
+void getBackground(char**& background, int height, int width) {
+	int heightConsole = height * 4 + 1;
+	int widthConsole = width * 10 + 1;
+
+	background = new char* [heightConsole];
+	for (int i = 0; i < heightConsole; i++) {
+		background[i] = new char[widthConsole];
+	}
+
+	ifstream ifs("BackGround\\background6x8.txt");
+
+	string line;
+	int count = 0;
+
+	if (!ifs.is_open()) {
+		exit(1);
+	}
+
+	while (!ifs.eof() && count < heightConsole) {
+		getline(ifs, line);
+
+		for (int i = 0; i < widthConsole; i++) {
+			background[count][i] = line[i];
+		}
+
+		count++;
+	}
+
+	ifs.close();
+}
+
+void displayBackground(char** background, int top, int left, int height) {
+	int heightConsole = height * 4 + 1;
+
+	for (int i = 0; i < heightConsole; i++) {
+		Console::gotoXY(top, left + i);
+		std::cout << background[i];
+	}
+}
+
+void deleteBackground(char** background, int height) {
+	for (int i = 0; i < height; i++)
+		delete [] background[i];
+	delete[] background;
 }
