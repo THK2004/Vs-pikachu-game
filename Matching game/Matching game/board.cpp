@@ -126,6 +126,63 @@ void Board::shuffle(int height, int width, Cell** pBoard) {
 	return;
 }
 
+void Board::getBackground(char**& background, int height, int width) {
+	int heightConsole = height * 4 + 1;
+	int widthConsole = width * 10 + 2;
+
+	background = new char* [heightConsole];
+	for (int i = 0; i < heightConsole; i++) {
+		background[i] = new char[widthConsole];
+	}
+
+	ifstream ifs("BackGround\\background6x8.txt");
+
+	string line;
+	int count = 0;
+
+	if (!ifs.is_open()) {
+		exit(1);
+	}
+
+	while (!ifs.eof() && count < heightConsole) {
+		getline(ifs, line);
+
+		for (int i = 0; i < widthConsole; i++) {
+			background[count][i] = line[i];
+		}
+
+		count++;
+	}
+
+	ifs.close();
+}
+
+void Board::displayBackground(Cell** pBoard, char** background, int height, int width) {
+	for (int i = 0; i < height; i++) {
+		for (int j = 0; j < width; j++) {
+			if (pBoard[i][j].pokemon == '0') {
+				int x_ = int(pBoard[i][j].x_console * 10);
+				int y_ = int(pBoard[i][j].y_console * 4);
+
+				//Vẽ
+				for (int h = pBoard[i][j].x * 4; h < pBoard[i][j].x * 4 + 5; h++) {
+					for (int w = pBoard[i][j].y * 10; w < pBoard[i][j].y * 10 + 11; w++) {
+						Console::gotoXY(x_ + w - pBoard[i][j].y * 10, y_ + h - pBoard[i][j].x * 4);
+						std::cout << background[h][w];
+					}
+				}
+			}
+		}
+	}
+}
+
+void Board::clearBackground(char** background, int height) {
+	int heightConsole = 4 * height + 1;
+	for (int i = 0; i < heightConsole; i++)
+		delete[] background[i];
+	delete[] background;
+}
+
 void Board::drawI(Cell cell_1, Cell cell_2) {
 	Console::setColor(WHITE, RED);
 	int x1 = int((cell_1.x_console * 10)) + 5;

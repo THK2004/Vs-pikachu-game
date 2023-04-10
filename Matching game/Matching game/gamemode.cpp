@@ -19,10 +19,9 @@ void GameMode::createNormalGame(Account& account) {
 	int EXIT = 0;
 
 	char** background;
-	getBackground(background, HEIGHT, WIDTH);
+	Board::getBackground(background, HEIGHT, WIDTH);
 
 	while (isPlaying) {
-		displayBackground(background, TOP, LEFT, HEIGHT);			//Vẽ background
 		board.drawBoard(HEIGHT, WIDTH, board.pBoard);				//Vẽ board hiện tại
 		LoginScreen::printAccountName(account);
 
@@ -115,9 +114,11 @@ void GameMode::createNormalGame(Account& account) {
 						start = clock();
 						break;
 					}
-					else
+					else {
+						Board::clearBackground(background, HEIGHT);
+						board.clearBoard(board.pBoard);
 						exit(0);
-
+					}
 				case KEY_RIGHT:
 
 					//Check về bên phải cùng hàng
@@ -383,6 +384,8 @@ void GameMode::createNormalGame(Account& account) {
 								board.pBoard[selectedCell[0].first][selectedCell[0].second].isSelected = 0;
 								board.pBoard[selectedCell[1].first][selectedCell[1].second].isSelected = 0;
 
+								Board::displayBackground(board.pBoard, background, HEIGHT, WIDTH);
+
 								remainCell = 2;
 								selectedCell[0].first = -2;
 								selectedCell[0].second = -2;
@@ -525,7 +528,7 @@ void GameMode::createNormalGame(Account& account) {
 	ofs << std::endl;
 	ofs.close();
 
-	deleteBackground(background, HEIGHT);
+	Board::clearBackground(background, HEIGHT);
 	board.clearBoard(board.pBoard);
 }
 
@@ -548,10 +551,9 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 	int EXIT = 0;
 
 	char** background;
-	getBackground(background, H_HEIGHT, H_WIDTH);
+	Board::getBackground(background, HEIGHT, WIDTH);
 
 	while (isPlaying) {
-		displayBackground(background, H_TOP, H_LEFT, H_HEIGHT);			//Vẽ background
 		board.drawBoard(H_HEIGHT, H_WIDTH, board.pBoard);
 		LoginScreen::printAccountName(account);
 
@@ -946,6 +948,8 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 									board.pBoard[selectedCell[1].first][i].deleteCell();
 								}
 
+
+								Board::displayBackground(board.pBoard, background, HEIGHT, WIDTH);
 								remainCell = 2;
 								selectedCell[0].first = -2;
 								selectedCell[0].second = -2;
@@ -1088,7 +1092,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 	ofs << std::endl;
 	ofs.close();
 
-	deleteBackground(background, H_HEIGHT);
+	Board::clearBackground(background, HEIGHT);
 	board.clearBoard(board.pBoard);
 }
 
@@ -1111,7 +1115,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 	int EXIT = 0;
 
 	char** background;
-	getBackground(background, H_HEIGHT, H_WIDTH);
+	Board::getBackground(background, HEIGHT, WIDTH);
 
 	//Tạo linked list
 	Node* head = createNode(board.pBoard[0][0].pokemon, board.pBoard[0][0].x, board.pBoard[0][0].y);
@@ -1124,7 +1128,6 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 	int len = 0;
 
 	while (isPlaying) {
-		displayBackground(background, H_TOP, H_LEFT, H_HEIGHT);			//Vẽ background
 		board.drawBoard(H_HEIGHT, H_WIDTH, board.pBoard);	//Vẽ board hiện tại
 		LoginScreen::printAccountName(account);
 
@@ -1543,6 +1546,8 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 									}
 								}
 
+								Board::displayBackground(board.pBoard, background, HEIGHT, WIDTH);
+
 								//Đặt lại
 								remainCell = 2;
 								selectedCell[0].first = -2;
@@ -1712,8 +1717,8 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 	ofs << std::endl;
 	ofs.close();
 
-	deleteBackground(background, H_HEIGHT);
 	deleteLinkedList(head);
+	Board::clearBackground(background, HEIGHT);
 	board.clearBoard(board.pBoard);
 }
 
@@ -1738,50 +1743,4 @@ void moveSuggestion(int height, int width, Cell** pBoard) {
 			}
 		}
 	}
-}
-
-void getBackground(char**& background, int height, int width) {
-	int heightConsole = height * 4 + 1;
-	int widthConsole = width * 10 + 1;
-
-	background = new char* [heightConsole];
-	for (int i = 0; i < heightConsole; i++) {
-		background[i] = new char[widthConsole];
-	}
-
-	ifstream ifs("BackGround\\background6x8.txt");
-
-	string line;
-	int count = 0;
-
-	if (!ifs.is_open()) {
-		exit(1);
-	}
-
-	while (!ifs.eof() && count < heightConsole) {
-		getline(ifs, line);
-
-		for (int i = 0; i < widthConsole; i++) {
-			background[count][i] = line[i];
-		}
-
-		count++;
-	}
-
-	ifs.close();
-}
-
-void displayBackground(char** background, int top, int left, int height) {
-	int heightConsole = height * 4 + 1;
-
-	for (int i = 0; i < heightConsole; i++) {
-		Console::gotoXY(top, left + i);
-		std::cout << background[i];
-	}
-}
-
-void deleteBackground(char** background, int height) {
-	for (int i = 0; i < height; i++)
-		delete [] background[i];
-	delete[] background;
 }

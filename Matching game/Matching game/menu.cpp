@@ -662,11 +662,11 @@ void Menu::leaderBoard() {
             if (listAccountRecord[i].time > listAccountRecord[j].time && listAccountRecord[i].score == listAccountRecord[j].score)
                 swap(listAccountRecord[i], listAccountRecord[j]);
 
-    //display 5 best record
-    for (int i = 0; i < 5; i++) {
+    //display 18 best record
+    for (int i = 0; i < 18; i++) {
         //Cột stt
         Console::gotoXY(9, 11 + i );
-        cout << i+1;
+        cout << i + 1;
 
         //Cột name
         Console::gotoXY(33, 11 + i);

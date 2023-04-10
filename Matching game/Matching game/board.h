@@ -38,6 +38,10 @@ struct Board {
 	static void eraseZ(Cell, Cell, Cell, Cell);
 	static void eraseU(Cell, Cell, Cell, Cell);
 
+	static void getBackground(char**& background, int height, int width);
+	static void displayBackground(Cell**, char** background, int height, int width);
+	static void clearBackground(char** background, int height);
+
 	void drawBoard(int, int, Cell**);					//Vẽ board trên console
 	void deleteBoard(int, int, Cell**);					//Xóa board
 	void clearBoard(Cell**);							//clear memory

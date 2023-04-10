@@ -156,6 +156,8 @@ bool LoginScreen::doLogin(Account& login) {
 				string token = "";
 
 				std::getline(ifs, line);	//line = "1/username/password"
+				if (line == "")
+					break;
 				stringstream ss(line);
 				getline(ss, token, '/');	//token = 1
 				login.Num = std::stoi(token);

@@ -27,7 +27,3 @@ struct GameMode {
 };
 
 void moveSuggestion(int, int, Cell**);
-
-void getBackground(char**&, int height, int width);
-void displayBackground(char**, int top, int left, int height);
-void deleteBackground(char**, int height);
