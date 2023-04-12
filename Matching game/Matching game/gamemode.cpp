@@ -110,7 +110,7 @@ void GameMode::createNormalGame(Account& account) {
 					EXIT = Menu::exitScreen();
 					if (EXIT == 0) {
 						true_while_flag = 0;
-
+						
 						start = clock();
 						break;
 					}
@@ -120,7 +120,7 @@ void GameMode::createNormalGame(Account& account) {
 						exit(0);
 					}
 				case KEY_RIGHT:
-
+					Console::playSound(MOVE_SOUND);
 					//Check về bên phải cùng hàng
 					if (isCurFound == 0) {
 						for (int j = curPos.second + 1; j < WIDTH; j++)
@@ -176,6 +176,7 @@ void GameMode::createNormalGame(Account& account) {
 					break;
 
 				case KEY_LEFT:
+					Console::playSound(MOVE_SOUND);
 					//Check về bên trái cùng hàng
 					if (isCurFound == 0) {
 						for (int j = curPos.second - 1; j >= 0; j--)
@@ -230,6 +231,7 @@ void GameMode::createNormalGame(Account& account) {
 					break;
 
 				case KEY_DOWN:
+					Console::playSound(MOVE_SOUND);
 					//Check thẳng xuống
 					if (isCurFound == 0) {
 						for (int i = curPos.first + 1; i < HEIGHT; i++)
@@ -284,7 +286,7 @@ void GameMode::createNormalGame(Account& account) {
 					break;
 
 				case KEY_UP:
-
+					Console::playSound(MOVE_SOUND);
 					//Check lên trên
 					if (isCurFound == 0) {
 						for (int i = curPos.first - 1; i >= 0; i--)
@@ -426,6 +428,7 @@ void GameMode::createNormalGame(Account& account) {
 					}
 					break;
 				case 'S':
+					Console::playSound(MOVE_SOUND);
 					gameplay.score -= 2;
 					Console::gotoXY(70, 5);
 					std::cout << "SHUFFLING...";
@@ -436,6 +439,7 @@ void GameMode::createNormalGame(Account& account) {
 					board.shuffle(HEIGHT, WIDTH, board.pBoard);
 					break;
 				case 's':
+					Console::playSound(MOVE_SOUND);
 					gameplay.score -= 2;
 					Console::gotoXY(70, 5);
 					std::cout << "SHUFFLING...";
@@ -446,11 +450,13 @@ void GameMode::createNormalGame(Account& account) {
 					board.shuffle(HEIGHT, WIDTH, board.pBoard);
 					break;
 				case 'A':
+					Console::playSound(MOVE_SOUND);
 					gameplay.score -= 2;
 					moveSuggestion(HEIGHT, WIDTH, board.pBoard);
 					Sleep(500);
 					break;
 				case 'a':
+					Console::playSound(MOVE_SOUND);
 					gameplay.score -= 2;
 					moveSuggestion(HEIGHT, WIDTH, board.pBoard);
 					Sleep(500);
@@ -459,6 +465,7 @@ void GameMode::createNormalGame(Account& account) {
 					end = clock();
 					playTime += (double)(end - start) / CLOCKS_PER_SEC;
 
+					Console::playSound(MENU_SOUND);
 					Console::clearConsole();
 					Console::setColor(WHITE, BLUE);
 					Console::gotoXY(57, 0);
@@ -473,6 +480,7 @@ void GameMode::createNormalGame(Account& account) {
 					end = clock();
 					playTime += (double)(end - start) / CLOCKS_PER_SEC;
 
+					Console::playSound(MENU_SOUND);
 					Console::clearConsole();
 					Console::setColor(WHITE, BLUE);
 					Console::gotoXY(57, 0);
@@ -652,7 +660,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 						exit(0);
 
 				case KEY_RIGHT:
-
+					Console::playSound(MOVE_SOUND);
 					//Check về bên phải cùng hàng
 					if (isCurFound == 0) {
 						for (int j = curPos.second + 1; j < H_WIDTH; j++)
@@ -708,6 +716,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					break;
 
 				case KEY_LEFT:
+					Console::playSound(MOVE_SOUND);
 					//Check về bên trái cùng hàng
 					if (isCurFound == 0) {
 						for (int j = curPos.second - 1; j >= 0; j--)
@@ -762,6 +771,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					break;
 
 				case KEY_DOWN:
+					Console::playSound(MOVE_SOUND);
 					//Check thẳng xuống
 					if (isCurFound == 0) {
 						for (int i = curPos.first + 1; i < H_HEIGHT; i++)
@@ -816,7 +826,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					break;
 
 				case KEY_UP:
-
+					Console::playSound(MOVE_SOUND);
 					//Check lên trên
 					if (isCurFound == 0) {
 						for (int i = curPos.first - 1; i >= 0; i--)
@@ -990,6 +1000,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					}
 					break;
 				case 'S':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					Console::gotoXY(70, 5);
 					std::cout << "SHUFFLING...";
@@ -1000,6 +1011,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					board.shuffle(H_HEIGHT, H_WIDTH, board.pBoard);
 					break;
 				case 's':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					Console::gotoXY(70, 5);
 					std::cout << "SHUFFLING...";
@@ -1010,11 +1022,13 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					board.shuffle(H_HEIGHT, H_WIDTH, board.pBoard);
 					break;
 				case 'A':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					moveSuggestion(HEIGHT, WIDTH, board.pBoard);
 					Sleep(500);
 					break;
 				case 'a':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					moveSuggestion(HEIGHT, WIDTH, board.pBoard);
 					Sleep(500);
@@ -1023,6 +1037,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					end = clock();
 					playTime += (double)(end - start) / CLOCKS_PER_SEC;
 
+					Console::playSound(MENU_SOUND);
 					Console::clearConsole();
 					Console::setColor(WHITE, BLUE);
 					Console::gotoXY(57, 0);
@@ -1037,6 +1052,7 @@ void GameMode::createHardGame_2DPointerArray(Account& account) {
 					end = clock();
 					playTime += (double)(end - start) / CLOCKS_PER_SEC;
 
+					Console::playSound(MENU_SOUND);
 					Console::clearConsole();
 					Console::setColor(WHITE, BLUE);
 					Console::gotoXY(57, 0);
@@ -1226,7 +1242,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 						exit(0);
 
 				case KEY_RIGHT:
-
+					Console::playSound(MOVE_SOUND);
 					//Check về bên phải cùng hàng
 					if (isCurFound == 0) {
 						for (int j = curPos.second + 1; j < H_WIDTH; j++)
@@ -1282,6 +1298,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 					break;
 
 				case KEY_LEFT:
+					Console::playSound(MOVE_SOUND);
 					//Check về bên trái cùng hàng
 					if (isCurFound == 0) {
 						for (int j = curPos.second - 1; j >= 0; j--)
@@ -1336,6 +1353,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 					break;
 
 				case KEY_DOWN:
+					Console::playSound(MOVE_SOUND);
 					//Check thẳng xuống
 					if (isCurFound == 0) {
 						for (int i = curPos.first + 1; i < H_HEIGHT; i++)
@@ -1390,7 +1408,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 					break;
 
 				case KEY_UP:
-
+					Console::playSound(MOVE_SOUND);
 					//Check lên trên
 					if (isCurFound == 0) {
 						for (int i = curPos.first - 1; i >= 0; i--)
@@ -1589,6 +1607,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 					}
 					break;
 				case 'S':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					Console::gotoXY(70, 5);
 					std::cout << "SHUFFLING...";
@@ -1609,6 +1628,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 
 					break;
 				case 's':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					Console::gotoXY(70, 5);
 					std::cout << "SHUFFLING...";
@@ -1627,11 +1647,13 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 
 					break;
 				case 'A':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					moveSuggestion(HEIGHT, WIDTH, board.pBoard);
 					Sleep(500);
 					break;
 				case 'a':
+					Console::playSound(MENU_SOUND);
 					gameplay.score -= 2;
 					moveSuggestion(HEIGHT, WIDTH, board.pBoard);
 					Sleep(500);
@@ -1640,6 +1662,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 					end = clock();
 					playTime += (double)(end - start) / CLOCKS_PER_SEC;
 
+					Console::playSound(MENU_SOUND);
 					Console::clearConsole();
 					Console::setColor(WHITE, BLUE);
 					Console::gotoXY(57, 0);
@@ -1654,6 +1677,7 @@ void GameMode::createHardGame_LinkedList(Account& account) {
 					end = clock();
 					playTime += (double)(end - start) / CLOCKS_PER_SEC;
 
+					Console::playSound(MENU_SOUND);
 					Console::clearConsole();
 					Console::setColor(WHITE, BLUE);
 					Console::gotoXY(57, 0);

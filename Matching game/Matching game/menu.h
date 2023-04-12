@@ -26,4 +26,5 @@ struct Menu
 	static void drawFaceRightPikachu();
 	static void winScreen(Account);
 	static int saveScreen();
+	static void continueScreen();
 };

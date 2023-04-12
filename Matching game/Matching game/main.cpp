@@ -7,13 +7,10 @@
 
 int main() {
 	Console::setupConsole();
-	//Menu::printAnimation();
+	Menu::printAnimation();
 
 	Account account;
 	LoginScreen::loginScreen(account);
-	
-	//GameMode::createHardGame_LinkedList();
-	//cin.get();
 
 	int status = 0;
 	int mode = 0;
@@ -37,6 +34,11 @@ int main() {
 				status = Menu::mainMenu(account);
 		}
 
+		else if (status == 1) {
+			Menu::continueScreen();
+			status = Menu::mainMenu(account);
+		}
+			
 		else if (status == 2) {
 			Menu::leaderBoard();
 			status = Menu::mainMenu(account);

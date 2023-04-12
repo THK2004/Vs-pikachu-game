@@ -403,9 +403,12 @@ void Menu::printPikachu() {
 }
 
 int Menu::exitScreen() {
+    Console::setColor(WHITE, BLACK);
     printLogo();
 
-    Console::setColor(WHITE, BLACK);
+    drawFaceRightPikachu();
+    drawFaceLeftPikachu();
+ 
     printDoubleRectangle(59, 14, 20, 2);
     printRectangle(62, 17, 4, 2);
     printRectangle(70, 17, 5, 2);
@@ -752,7 +755,7 @@ void Menu::helpScreen() {
     cout << "I: for more infomation.";
     Console::gotoXY(left + 83, top + 5);
     putchar(249);
-    cout << "ESC: to save and  exit the program.";
+    cout << "ESC: to exit the program safely.";
 
 
     Console::gotoXY(left + 3, top + 10);
@@ -785,7 +788,7 @@ void Menu::helpScreen() {
     cout << "Any valid pair of cell is found give you 2 points.";
     Console::gotoXY(left + 17, top + 18);
     putchar(249);
-    cout << "There is time count for each attempt but no penalty.";
+    cout << "There is play time count for each attempt but no penalty.";
     Console::gotoXY(left + 17, top + 19);
     putchar(249);
     cout << "Any help like shuffle manually or move suggestion would decrease your point by 2.";
@@ -811,7 +814,7 @@ void Menu::helpScreen() {
     cout << "Name: Tran Huy Khanh                    Student ID: 22127191                    Class: 22CLC03";
     Console::gotoXY(left + 17, top + 25);
     putchar(249);
-    cout << "Name: Hoang Bao Khanh                   Student ID: 22127189                    Class: 22CLC03";
+    cout << "Name: Hoang Bao Khanh                   Student ID: 22127183                    Class: 22CLC03";
 
     Console::gotoXY(left + 17, top + 27);
     putchar(249);
@@ -829,7 +832,7 @@ void Menu::helpScreen() {
 
 void Menu::winScreen(Account account) {
     srand((unsigned int)time(NULL));
-    //Console::playSound(WIN_SOUND);
+    Console::playSound(WIN_SOUND);
     Console::setColor(WHITE, GREEN);
     cout << R"(
                              __________  _   ____________  ___  ________  ____    ___  ______________  _   _______
@@ -875,6 +878,56 @@ void Menu::winScreen(Account account) {
     }
     Console::setColor(WHITE, BLACK);
     std::system("cls");
+}
+
+void Menu::continueScreen() {
+    Console::gotoXY(5, 0);
+    cout << R"(
+                                        _._       _,._
+                                    _.'   `. ' .'   _`.
+                            ,"""/`""-.-.,/. ` V'\-,`.,--/"""."-..
+                          ,'    `...,' . ,\-----._|     `.   /   \
+                         `.            .`  -'`"" .._   :> `-'   `.
+                        ,'  ,-.  _,.-'| `..___ ,'   |'-..__   .._ L
+                       .    \_ -'   `-'     ..      `.-' `.`-.'_ .|
+                       |   ,',-,--..  ,--../  `.  .-.    , `-.  ``.
+                       `.,' ,  |   |  `.  /'/,,.\/  |    \|   |
+                            `  `---'    `j   .   \  .     '   j
+                          ,__`"        ,'|`'\_/`.'\'        |\-'-, _,.
+                   .--...`-. `-`. /    '- ..      _,    /\ ,' .--"'  ,'".
+                 _'-""-    --  _`'-.../ __ '.'`-^,_`-""""---....__  ' _,-`
+               _.----`  _..--.'        |  "`-..-" __|'"'         .""-. ""'--.._
+              /        '    /     ,  _.+-.'  ||._'   """". .          `     .__\
+             `---    /        /  / j'       _/|..`  -. `-`\ \   \  \   `.  \ `-..
+            ," _.-' /    /` ./  /`_|_,-"   ','|       `. | -'`._,   L  \ .  `.   |
+            `"' /  /  / ,__...-----| _.,  ,'            `|----.._`-.|' |. .` ..  .
+               /  '| /.,/   \--.._ `-,' ,          .  '`.'  __,., '  ''``._ \ \`,'
+              /_,'---  ,     \`._,-` \ //  / . \    `._,  -`,  / / _   |   `-L -
+               /       `.     ,  ..._ ' `_/ '| |\ `._'       '-.'   `.,'     |
+              '         /    /  ..   `.  `./ | ; `.'    ,"" ,.  `.    \      |
+               `.     ,'   ,'   | |\  |       "        |  ,'\ |   \    `    ,L
+               /|`.  /    '     | `-| '                  /`-' |    L    `._/  \
+              / | .`|    |  .   `._.'                   `.__,'   .  |     |  (`
+             '-""-'_|    `. `.__,._____     .    _,        ____ ,-  j     ".-'"'
+                    \      `-.  \/.    `"--.._    _,.---'""\/  "_,.'     /-'
+                     )        `-._ '-.        `--"      _.-'.-""        `.
+                    ./            `,. `".._________...""_.-"`.          _j
+                   /_\.__,"".   ,.'  "`-...________.---"     .".   ,.  / \
+                          \_/"""-'                           `-'--(_,`"`-` 
+)"; 
+    Console::setColor(WHITE, RED);
+    printRectangle(94, 14, 37, 4);
+    Console::gotoXY(95, 15);
+    cout << "This feature is under construction.";
+    Console::gotoXY(95, 16);
+    cout << "It will be available in future patch.";
+    Console::gotoXY(95, 17);
+    cout << "Press any button to come back...";
+    Console::setColor(WHITE, BLACK);
+
+    int key = _getch();
+    Console::clearConsole();
+    return;
 }
 
 void Menu::drawFaceLeftPikachu() {
